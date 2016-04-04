@@ -1,12 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import home from './home'
-import header from './components/header'
-import recruit from './recruit'
-import account from './account'
-import user from './user'
-
 Vue.use(VueRouter)
+var router = new VueRouter()
+
+router.map()
 
 var app = Vue.extend({
   data: function () {
@@ -22,37 +19,16 @@ var app = Vue.extend({
       this.$emit('user:login', id)
     }
   },
-  components: {
-    navigator: header
-  },
   events: {
     'user:login': function (id, callback) {
       this.islogin = true
       this.uid = id
+      router.replace('/')
     }
   }
 })
 
-var router = new VueRouter()
-
-router.map({
-  '/': {
-    component: home
-  },
-  'recruit-a-friend': {
-    component: recruit
-  },
-  'account': {
-    component: account
-  },
-  'user/:uid': {
-    name: 'user',
-    component: user
-  }
-})
-
 router.start(app, 'body')
-
 export default function () {
   return router
 }

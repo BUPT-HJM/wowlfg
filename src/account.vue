@@ -6,14 +6,14 @@
           <div class="field">
             <label>账号</label>
             <div class="ui left icon input">
-              <input type="text" placeholder="邮箱" @blur="verifyEmail(this.loginInfo)">
+              <input type="text" placeholder="邮箱" v-model="loginInfo.email" @blur="verifyEmail(this.loginInfo)">
               <i class="user icon"></i>
             </div>
           </div>
           <div class="field">
             <label>密码</label>
             <div class="ui left icon input">
-              <input type="password">
+              <input type="password" v-model="loginInfo.password">
               <i class="lock icon"></i>
             </div>
           </div>
@@ -21,7 +21,7 @@
             <p v-if="loginInfo.error.email">邮箱格式不正确</p>
             <p v-if="loginInfo.query.status == 2"></p>
           </div>
-          <div class="ui blue submit button" :class="{disabled: loginError}">登入</div>
+          <div class="ui blue submit button" :class="{disabled: loginError}" @click="login">登入</div>
           <div class="ui submit button" @click="switchForgot">忘记密码</div>
         </div>
       </div>
@@ -98,7 +98,9 @@
 }
 </style>
 <script>
-import {ref} from './ref.js'
+import ref from './ref'
+console.log(ref())
+import router from './main'
 export default {
   data: function () {
     return {
@@ -193,13 +195,21 @@ export default {
       })
     },
     login: function () {
+      if (!this.loginInfo.email || !this.loginInfo.password) {
+        return
+      }
       var data = {
         email: this.loginInfo.email,
         password: this.loginInfo.password
       }
+      var self = this
       ref().authWithPassword(data, function (err, data) {
         if (err == null) {
-          console.log('auth success!')
+          var id = data.uid.replace(/simplelogin:/ig, '')
+          $.cookie('access_token', data.token, { expires: 7, path: '/' })
+          $.cookie('uid', id, { expires: 7, path: '/' })
+          self.$dispatch('user:login', id)
+          router().replace('/')
         } else {
           console.log('auth failed,msg:', err)
         }
@@ -207,7 +217,7 @@ export default {
     },
     verifyEmail: function (context) {
       var re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
-      if (re.test(this.registerInfo.email)) {
+      if (re.test(context.email)) {
         context.error.email = false
       } else {
         context.error.email = true
