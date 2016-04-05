@@ -19,7 +19,7 @@
   </div>
 </template>
 
-<style>
+<style lang="less">
 html {
   height: 100%;
 }

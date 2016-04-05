@@ -2,7 +2,6 @@ var webpack = require('webpack')
 var path = require('path')
 var cssLoaders = require('./css-loaders')
 var projectRoot = path.resolve(__dirname, '../')
-console.log(path.resolve(__dirname, '../dist/static'))
 module.exports = {
   entry: {
     app: './src/main.js'
