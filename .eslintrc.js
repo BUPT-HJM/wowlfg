@@ -8,7 +8,8 @@ module.exports = {
   ],
   'globals': {
     '$': true,
-    'Wilddog': true
+    'Wilddog': true,
+    'VueAsyncData': true
   },
   // add your custom rules here
   'rules': {

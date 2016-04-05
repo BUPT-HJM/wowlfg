@@ -98,9 +98,9 @@
 }
 </style>
 <script>
-import ref from './ref'
-console.log(ref())
+import refInstance from './ref'
 import router from './main'
+var ref = refInstance()
 export default {
   data: function () {
     return {
@@ -185,7 +185,7 @@ export default {
         password: this.registerInfo.password
       }
       var self = this
-      ref().createUser(data, function (err, data) {
+      ref.createUser(data, function (err, data) {
         if (err != null) {
           self.registerInfo.query.status = 2
           self.registerInfo.query.error = err.code
@@ -203,7 +203,7 @@ export default {
         password: this.loginInfo.password
       }
       var self = this
-      ref().authWithPassword(data, function (err, data) {
+      ref.authWithPassword(data, function (err, data) {
         if (err == null) {
           var id = data.uid.replace(/simplelogin:/ig, '')
           $.cookie('access_token', data.token, { expires: 7, path: '/' })

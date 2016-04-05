@@ -5,24 +5,24 @@
     <div class="ui form">
       <div class="inline fields">
         <div class="field">
-          <select class="ui dropdown">
+          <select class="ui dropdown faction-select" v-model="filter.faction">
             <option value="">阵营</option>
-            <option value="1">联盟</option>
-            <option value="0">部落</option>
+            <option value="0">联盟</option>
+            <option value="1">部落</option>
           </select>
         </div>
         <div class="field">
-          <input type="text" name="shipping[first-name]" placeholder="First Name">
+          <input type="text" v-model="filter.server">
         </div>
         <div class="field">
           <div class="ui checkbox">
-            <input type="checkbox" name="example" v-model="isMainAccount">
+            <input type="checkbox" name="example" v-model="filter.mainAccount" debounce="500">
             <label>主招募</label>
           </div>
         </div>
       </div>
     </div>
-    <table class="ui single line table">
+    <table id="recruit-tb" class="ui single line table">
       <thead>
         <tr>
           <th>阵营</th>
@@ -34,47 +34,109 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>联盟</td>
-          <td>德拉诺</td>
-          <td>主招募</td>
-          <td>2016年2月4日</td>
-          <td>晚上在线</td>
-          <td>#122182</td>
-        </tr>
-        <tr>
-          <td>联盟</td>
-          <td>德拉诺</td>
-          <td>主招募</td>
-          <td>2016年2月4日</td>
-          <td>无</td>
-          <td>#122182</td>
-        </tr>
-        <tr>
-          <td>联盟</td>
-          <td>德拉诺</td>
-          <td>主招募</td>
-          <td>2016年2月4日</td>
-          <td>奖励一张小卡</td>
-          <td>#122182</td>
+        <tr v-for="activity in activities" :class="{hidden: !activity.show}">
+          <td v-if="activity.faction == 0">联盟</td>
+          <td v-else>部落</td>
+          <td>{{activity.server}}</td>
+          <td v-if="activity.mainAccount == 0">主招募</td>
+          <td v-else>被招募</td>
+          <td>{{activity.startedAt}}</td>
+          <td v-if="activity.msg">{{activity.msg}}</td>
+          <td v-else>无</td>
+          <td>{{activity.contact.content}}</td>
         </tr>
       </tbody>
     </table>
   </div>
   <modal></modal>
 </template>
-
+<style lang="less">
+  .faction-select {
+    width: 70px!important;
+  }
+  #recruit-tb {
+    .hidden {
+      display: none!important;
+    }
+  }
+</style>
 <script>
 import modal from './components/recruit-form'
+import refInstance from './ref'
+import router from './main'
+var ref = refInstance()
+function _filter (key, val) {
+  var obj = this.activities
+  Object.keys(obj).map(function (i) {
+    if (val === null) {
+      obj[i].show = true
+      return
+    }
+    if (key === 'server') {
+      var reg = new RegExp(val, 'g')
+      if (!reg.test(obj[i][key])) {
+        obj[i].show = false
+        return
+      }
+    } else {
+      if (+obj[i][key] !== +val) {
+        obj[i].show = false
+        return
+      }
+    }
+    obj[i].show = true
+  })
+}
 export default {
   data: function () {
     return {
-      isMainAccount: true
+      isMainAccount: true,
+      activities: {},
+      filter: {
+        faction: '',
+        server: '',
+        mainAccount: 0
+      }
     }
+  },
+  watch: {
+    'filter.faction': function (val) {
+      _filter.apply(this, ['faction', val])
+    },
+    'filter.server': function (val) {
+      _filter.apply(this, ['server', val])
+    },
+    'filter.mainAccount': function (val) {
+      _filter.apply(this, ['mainAccount', val])
+    }
+  },
+  asyncData: function (resolve, reject) {
+    ref.child('recruit').on('value', function (snapshot) {
+      var val = snapshot.val()
+      if (val) {
+        Object.keys(val).map(function (i) {
+          val[i].show = true
+        })
+        resolve({
+          activities: val
+        })
+      }
+    })
   },
   methods: {
     modalCtrl: function () {
-      $('.ui.modal').modal('show')
+      var self = this
+      var auth = ref.getAuth()
+      if (auth) {
+        $('.ui.modal').modal({
+          onApprove: function () {
+            self.$broadcast('submit', this)
+            return false
+          }
+        }).modal('show')
+      } else {
+        router.go('/account')
+      }
     }
   },
   components: {

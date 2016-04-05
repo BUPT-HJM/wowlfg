@@ -7,7 +7,7 @@ import account from './account'
 import user from './user'
 
 Vue.use(VueRouter)
-
+Vue.use(VueAsyncData)
 var app = Vue.extend({
   data: function () {
     return {
