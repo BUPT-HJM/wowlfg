@@ -135,7 +135,7 @@ export default {
           }
         }).modal('show')
       } else {
-        router.go('/account')
+        router().go('/account')
       }
     }
   },
