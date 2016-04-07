@@ -63,7 +63,8 @@
 <script>
 import modal from './components/recruit-form'
 import ref from './ref'
-import router from './main'
+import router from './router'
+
 function _filter (key, val) {
   var obj = this.activities
   Object.keys(obj).map(function (i) {
@@ -116,6 +117,7 @@ export default {
         Object.keys(val).map(function (i) {
           val[i].show = true
         })
+        console.log(resolve())
         resolve({
           activities: val
         })
@@ -134,7 +136,7 @@ export default {
           }
         }).modal('show')
       } else {
-        router().go('/account')
+        router.go('/account')
       }
     }
   },

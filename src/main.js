@@ -1,9 +1,6 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
 import header from './components/header'
 import ref from './ref'
-Vue.use(VueAsyncData)
-Vue.use(VueRouter)
 
 var app = Vue.extend({
   data: function () {
@@ -21,7 +18,8 @@ var app = Vue.extend({
       if (!auth) {
         ref.authWithCustomToken(token, function (error, authData) {
           if (error) {
-            console.log('Login Failed!', error)
+            $.removeCookie('uid')
+            $.removeCookie('access_token')
           } else {
             console.log('Authenticated successfully with payload:', authData)
           }
@@ -39,8 +37,5 @@ var app = Vue.extend({
     }
   }
 })
-
-var router = new VueRouter()
-import routerMap from './router'
-routerMap(router)
+import router from './router'
 router.start(app, 'body')

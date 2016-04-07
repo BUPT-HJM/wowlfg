@@ -1,29 +1,31 @@
 <template>
   <div class="user-center">
-    <button class="ui button" type="submit" @click="logout">退出账号</button>
-    <h3>账号信息 </h3>
-    <div class="ui form">
-      <div class="two fields">
-        <div class="field">
-          <label>用户名</label>
-          <p v-show="username && !edit">{{username}}</p>
-          <input type="text" v-model="username" v-show="edit">
+    <div class="ui container">
+      <button class="ui button" type="submit" @click="logout">退出账号</button>
+      <h3>账号信息 </h3>
+      <div class="ui form">
+        <div class="two fields">
+          <div class="field">
+            <label>用户名</label>
+            <p v-show="username && !edit">{{username}}</p>
+            <input type="text" v-model="username" v-show="edit">
+          </div>
+          <div class="field">
+            <label>战网ID</label>
+            <p v-show="battleID && !edit">{{battleID}}</p>
+            <input type="text" v-model="battleID" v-show="edit">
+          </div>
         </div>
         <div class="field">
-          <label>战网ID</label>
-          <p v-show="battleID && !edit">{{battleID}}</p>
-          <input type="text" v-model="battleID" v-show="edit">
+          <label>邮箱</label>
+          <p>{{email}}</p>
         </div>
+        <button class="ui button" type="submit" :class="{green: edit}" @click="save">
+          <span v-if="!edit">修改</span>
+          <span v-else>保存</span>
+        </button>
+        <button class="ui button" type="submit" v-show="edit" @click="cancel">取消</button>
       </div>
-      <div class="field">
-        <label>邮箱</label>
-        <p>{{email}}</p>
-      </div>
-      <button class="ui button" type="submit" :class="{green: edit}" @click="save">
-        <span v-if="!edit">修改</span>
-        <span v-else>保存</span>
-      </button>
-      <button class="ui button" type="submit" v-show="edit" @click="cancel">取消</button>
     </div>
   </div>
 </template>
@@ -41,7 +43,7 @@
 </style>
 <script>
 import ref from './ref'
-import router from './main'
+import router from './router'
 export default {
   data: function () {
     return {
@@ -63,8 +65,8 @@ export default {
   created: function () {
     var auth = ref.getAuth()
     var token = $.cookie('access_token')
-    if (!token || token !== auth.token) {
-      router().replace('/')
+    if (!token || !auth || token !== auth.token) {
+      router.replace('/')
     }
     if (auth) {
       this.email = auth.password.email
@@ -76,7 +78,7 @@ export default {
       this.$root.$data.uid = ''
       $.removeCookie('access_token', {path: '/'})
       $.removeCookie('uid', {path: '/'})
-      router().replace('/')
+      router.replace('/')
     },
     save: function () {
       var self = this
