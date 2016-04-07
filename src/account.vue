@@ -99,7 +99,7 @@
 </style>
 <script>
 import ref from './ref'
-import router from './main'
+import router from './router'
 export default {
   data: function () {
     return {
@@ -208,7 +208,7 @@ export default {
           $.cookie('access_token', data.token, { expires: 7, path: '/' })
           $.cookie('uid', id, { expires: 7, path: '/' })
           self.$dispatch('user:login', id)
-          router().replace('/')
+          router.replace('/')
         } else {
           console.log('auth failed,msg:', err)
         }

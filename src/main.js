@@ -13,17 +13,19 @@ var app = Vue.extend({
     var token = $.cookie('access_token')
     var id = $.cookie('uid')
     var auth = ref.getAuth()
+    var self = this
     if (token) {
-      this.$emit('user:login', id)
       if (!auth) {
         ref.authWithCustomToken(token, function (error, authData) {
           if (error) {
             $.removeCookie('uid')
             $.removeCookie('access_token')
           } else {
-            console.log('Authenticated successfully with payload:', authData)
+            self.$emit('user:login', id)
           }
         })
+      } else {
+        this.$emit('user:login', id)
       }
     }
   },
