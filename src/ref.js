@@ -1,3 +1,2 @@
-export default function () {
-  return new Wilddog('https://lfg.wilddogio.com/')
-}
+var ref = new Wilddog('https://lfg.wilddogio.com/')
+export default ref

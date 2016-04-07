@@ -62,9 +62,8 @@
 </style>
 <script>
 import modal from './components/recruit-form'
-import refInstance from './ref'
+import ref from './ref'
 import router from './main'
-var ref = refInstance()
 function _filter (key, val) {
   var obj = this.activities
   Object.keys(obj).map(function (i) {

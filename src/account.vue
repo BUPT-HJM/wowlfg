@@ -98,9 +98,8 @@
 }
 </style>
 <script>
-import refInstance from './ref'
+import ref from './ref'
 import router from './main'
-var ref = refInstance()
 export default {
   data: function () {
     return {

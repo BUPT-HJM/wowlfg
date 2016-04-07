@@ -8,7 +8,7 @@
       <a class="item">News</a>
       <a class="item">组队</a>
       <a class="item" v-link="{ path: '/recruit-a-friend' }">招募</a>
-      <a class="item">Tips</a>
+      <a class="item" v-link="{ path: '/tips' }">Tips</a>
       <div class="right menu">
         <a class="item" v-link="{ path: '/account' }" v-if="!auth">登入</a>
         <a class="item" v-link="{ name: 'user', params: { uid: uid }}" v-else>{{uid}}</a>

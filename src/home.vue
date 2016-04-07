@@ -25,7 +25,7 @@ html {
 }
 
 body {
-  padding-top: 65px;
+  padding-top: 75px;
 }
 
 .intro {

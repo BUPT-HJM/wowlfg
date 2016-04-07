@@ -53,8 +53,7 @@
   </div>
 </template>
 <script>
-import refInstance from '../ref.js'
-var ref = refInstance()
+import ref from '../ref.js'
 export default {
   data: function () {
     return {
