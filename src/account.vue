@@ -1,89 +1,91 @@
 <template>
   <div class="account">
-    <div class="ui two column middle aligned very relaxed stackable grid" v-show="status == 0">
-      <div class="column">
-        <div class="ui form" :class="{error: loginError, success: loginSuccess}">
-          <div class="field">
-            <label>账号</label>
-            <div class="ui left icon input">
-              <input type="text" placeholder="邮箱" v-model="loginInfo.email" @blur="verifyEmail(this.loginInfo)">
-              <i class="user icon"></i>
+    <div class="ui container">
+      <div class="ui two column middle aligned very relaxed stackable grid" v-show="status == 0">
+        <div class="column">
+          <div class="ui form" :class="{error: loginError, success: loginSuccess}">
+            <div class="field">
+              <label>账号</label>
+              <div class="ui left icon input">
+                <input type="text" placeholder="邮箱" v-model="loginInfo.email" @blur="verifyEmail(this.loginInfo)">
+                <i class="user icon"></i>
+              </div>
             </div>
-          </div>
-          <div class="field">
-            <label>密码</label>
-            <div class="ui left icon input">
-              <input type="password" v-model="loginInfo.password">
-              <i class="lock icon"></i>
+            <div class="field">
+              <label>密码</label>
+              <div class="ui left icon input">
+                <input type="password" v-model="loginInfo.password">
+                <i class="lock icon"></i>
+              </div>
             </div>
+            <div class="ui message error">
+              <p v-if="loginInfo.error.email">邮箱格式不正确</p>
+              <p v-if="loginInfo.query.status == 2"></p>
+            </div>
+            <div class="ui blue submit button" :class="{disabled: loginError}" @click="login">登入</div>
+            <div class="ui submit button" @click="switchForgot">忘记密码</div>
           </div>
-          <div class="ui message error">
-            <p v-if="loginInfo.error.email">邮箱格式不正确</p>
-            <p v-if="loginInfo.query.status == 2"></p>
-          </div>
-          <div class="ui blue submit button" :class="{disabled: loginError}" @click="login">登入</div>
-          <div class="ui submit button" @click="switchForgot">忘记密码</div>
+        </div>
+        <div class="ui vertical divider">Or </div>
+        <div class="center aligned column">
+          <div class="ui big green labeled icon button" @click="registerEntry"><i class="signup icon"></i> 注册 </div>
         </div>
       </div>
-      <div class="ui vertical divider">Or </div>
-      <div class="center aligned column">
-        <div class="ui big green labeled icon button" @click="registerEntry"><i class="signup icon"></i> 注册 </div>
+      <!-- 注册 -->
+      <div class="ui two column middle aligned very relaxed stackable grid" v-show="status == 1">
+        <div class="center aligned column">
+          <div class="ui big blue labeled icon button" @click="loginEntry"><i class="signup icon"></i> 登入 </div>
+        </div>
+        <div class="ui vertical divider">Or </div>
+        <div class="column">
+          <div class="ui form" :class="{error: registerError, success: registerSuccess}">
+            <div class="field">
+              <label>邮箱</label>
+              <div class="ui left icon input">
+                <input type="email" v-model="registerInfo.email" @blur="verifyEmail(this.registerInfo)">
+                <i class="mail icon"></i>
+              </div>
+            </div>
+            <div class="field">
+              <label>密码</label>
+              <div class="ui left icon input">
+                <input type="password" v-model="registerInfo.password">
+                <i class="lock icon"></i>
+              </div>
+            </div>
+            <div class="field">
+              <label>重复密码</label>
+              <div class="ui left icon input">
+                <input type="password" v-model="registerInfo.repeat">
+                <i class="lock icon"></i>
+              </div>
+            </div>
+            <div class="ui message error">
+              <p v-if="registerInfo.error.email">邮箱格式不正确</p>
+              <p v-if="registerInfo.error.repeat">两次密码输入不一致</p>
+              <p v-if="registerInfo.query.status == 2">{{registerErrorText}}</p>
+            </div>
+            <div class="ui message success">
+              <p>注册成功</p>
+            </div>
+            <div class="ui green submit button" :class="{disabled: registerError}" @click="register">注册</div>
+          </div>
+        </div>
       </div>
-    </div>
-    <!-- 注册 -->
-    <div class="ui two column middle aligned very relaxed stackable grid" v-show="status == 1">
-      <div class="center aligned column">
-        <div class="ui big blue labeled icon button" @click="loginEntry"><i class="signup icon"></i> 登入 </div>
-      </div>
-      <div class="ui vertical divider">Or </div>
-      <div class="column">
-        <div class="ui form" :class="{error: registerError, success: registerSuccess}">
+      <!-- 找回密码 -->
+      <div v-show="forgot">
+        <div class="ui horizontal divider">忘记密码？ </div>
+        <div class="ui form">
           <div class="field">
             <label>邮箱</label>
-            <div class="ui left icon input">
-              <input type="email" v-model="registerInfo.email" @blur="verifyEmail(this.registerInfo)">
-              <i class="mail icon"></i>
-            </div>
+            <input type="text" value="">
           </div>
-          <div class="field">
-            <label>密码</label>
-            <div class="ui left icon input">
-              <input type="password" v-model="registerInfo.password">
-              <i class="lock icon"></i>
-            </div>
+          <div class="ui success message">
+            <div class="header">提交成功</div>
+            <p>已经向您的邮箱发送了一封密码找回邮件，请登录您的邮箱重置密码信息</p>
           </div>
-          <div class="field">
-            <label>重复密码</label>
-            <div class="ui left icon input">
-              <input type="password" v-model="registerInfo.repeat">
-              <i class="lock icon"></i>
-            </div>
-          </div>
-          <div class="ui message error">
-            <p v-if="registerInfo.error.email">邮箱格式不正确</p>
-            <p v-if="registerInfo.error.repeat">两次密码输入不一致</p>
-            <p v-if="registerInfo.query.status == 2">{{registerErrorText}}</p>
-          </div>
-          <div class="ui message success">
-            <p>注册成功</p>
-          </div>
-          <div class="ui green submit button" :class="{disabled: registerError}" @click="register">注册</div>
+          <div class="ui submit button">找回</div>
         </div>
-      </div>
-    </div>
-    <!-- 找回密码 -->
-    <div v-show="forgot">
-      <div class="ui horizontal divider">忘记密码？ </div>
-      <div class="ui form">
-        <div class="field">
-          <label>邮箱</label>
-          <input type="text" value="">
-        </div>
-        <div class="ui success message">
-          <div class="header">提交成功</div>
-          <p>已经向您的邮箱发送了一封密码找回邮件，请登录您的邮箱重置密码信息</p>
-        </div>
-        <div class="ui submit button">找回</div>
       </div>
     </div>
   </div>

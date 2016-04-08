@@ -4,9 +4,9 @@
       <div class="item">
         <img src="../assets/logo.png">
       </div>
-      <a class="item" v-link="{ path: '/' }">首页</a>
+      <a class="item" v-link="{ path: '/index' }">首页</a>
       <a class="item">News</a>
-      <a class="item">组队</a>
+      <a class="item" v-link="{ path: '/group' }">组队</a>
       <a class="item" v-link="{ path: '/recruit-a-friend' }">招募</a>
       <a class="item" v-link="{ path: '/tips' }">Tips</a>
       <div class="right menu">

@@ -1,5 +1,5 @@
 <template>
-  <div id="recruit-modal" class="ui modal">
+  <div id="group-modal" class="ui modal">
     <div class="header">发布招募信息</div>
     <div class="content">
       <div class="ui form">
@@ -17,11 +17,8 @@
               <input type="text" v-model="server">
             </div>
             <div class="field">
-              <label>招募形式</label>
-              <select class="ui dropdown" v-model="mainAccount">
-                <option value="0">主招募</option>
-                <option value="1">被招募</option>
-              </select>
+              <label>标签</label>
+              <input type="text" v-model="tags" placeholder="请以,分割">
             </div>
           </div>
         </div>

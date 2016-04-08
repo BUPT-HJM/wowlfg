@@ -5,13 +5,16 @@ import recruit from './recruit'
 import account from './account'
 import user from './user'
 import tips from './tips'
+import group from './group'
 
 Vue.use(VueRouter)
 Vue.use(VueAsyncData)
-var router = new VueRouter()
+var router = new VueRouter({
+  linkActiveClass: 'active'
+})
 
 router.map({
-  '/': {
+  'index': {
     component: home
   },
   'recruit-a-friend': {
@@ -26,7 +29,14 @@ router.map({
   },
   'tips': {
     component: tips
+  },
+  'group': {
+    component: group
   }
+})
+
+router.redirect({
+  '*': '/index'
 })
 
 export default router

@@ -78,6 +78,7 @@ export default {
       this.$root.$data.uid = ''
       $.removeCookie('access_token', {path: '/'})
       $.removeCookie('uid', {path: '/'})
+      ref.unauth()
       router.replace('/')
     },
     save: function () {

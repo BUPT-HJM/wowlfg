@@ -1,6 +1,6 @@
 <template>
   <div class="ui container">
-    <button class="ui green button" @click="modalCtrl('#recruit-modal')">发布{{module}}信息</button>
+    <button class="ui green button" @click="modalCtrl('#group-modal')">发布{{module}}信息</button>
     <h4 class="ui horizontal divider header"><i class="info icon"></i> {{module}}信息</h4>
     <div class="ui form">
       <div class="inline fields">
@@ -15,9 +15,7 @@
           <input type="text" v-model="filter.server" placeholder="服务器">
         </div>
         <div class="field">
-          <select class="ui dropdown faction-select" v-model="filter.mainAccount">
-            <option value="{{option.key}}" v-for="option in options">{{option.value}}</option>
-          </select>
+          <input type="text" v-model="filter.tags" placeholder="标签">
         </div>
       </div>
     </div>
@@ -32,8 +30,7 @@
           <td v-if="activity.faction == 0">联盟</td>
           <td v-else>部落</td>
           <td>{{activity.server}}</td>
-          <td v-if="activity.mainAccount == 0">主招募</td>
-          <td v-else>被招募</td>
+          <td>标签</td>
           <td>{{activity.startedAt}}</td>
           <td v-if="activity.msg">{{activity.msg}}</td>
           <td v-else>无</td>
@@ -55,27 +52,25 @@
 }
 </style>
 <script>
-import modal from './components/recruit-form'
-import ref from './ref'
 import post from './mixins/post'
+import modal from './components/group-form'
 export default {
   mixins: [post],
   data: function () {
     return {
-      module: '招募',
-      thead: ['阵营', '服务器', '招募形式', '时间', '描述', '联系方式'],
+      module: '组队',
+      thead: ['阵营', '服务器', '标签', '时间', '描述', '联系方式'],
       options: [{
-        key: 0,
-        value: '主招募'
+        key: '',
+        value: '标签'
       }, {
-        key: 1,
-        value: '被招募'
+        key: '0',
+        value: '成就'
       }],
-      activities: {},
       filter: {
         faction: '',
         server: '',
-        mainAccount: 0
+        tags: ''
       }
     }
   },
@@ -87,21 +82,8 @@ export default {
       this.$emit('keyFilter', 'server', val)
     },
     'filter.mainAccount': function (val) {
-      this.$emit('keyFilter', 'mainAccount', val)
+      this.$emit('keyFilter', 'tags', val)
     }
-  },
-  asyncData: function (resolve, reject) {
-    ref.child('recruit').on('value', function (snapshot) {
-      var val = snapshot.val()
-      if (val) {
-        Object.keys(val).map(function (i) {
-          val[i].show = true
-        })
-        resolve({
-          activities: val
-        })
-      }
-    })
   },
   components: {
     modal: modal
