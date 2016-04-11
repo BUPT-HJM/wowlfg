@@ -117,11 +117,11 @@ export default {
     }
   },
   methods: {
-    modalCtrl: function (id) {
+    modalCtrl: function () {
       var self = this
       var auth = ref.getAuth()
       if (auth) {
-        $(id).modal({
+        $('.recruit-modal').modal({
           onApprove: function () {
             self.$broadcast('submit', this)
             return false

@@ -2,7 +2,14 @@ import Vue from 'vue'
 import header from './components/header'
 import ref from './ref'
 import auth from './auth'
+import filter from './filter'
+Vue.filter('responsibility', function (value) {
+  return filter().responsibility(value)
+})
 
+Vue.filter('class', function (value) {
+  return filter().class(value)
+})
 var app = Vue.extend({
   data: function () {
     return {

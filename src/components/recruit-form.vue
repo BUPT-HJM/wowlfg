@@ -1,5 +1,5 @@
 <template>
-  <div id="recruit-modal" class="ui modal">
+  <div class="ui modal recruit-modal">
     <div class="header">发布招募信息</div>
     <div class="content">
       <div class="ui form">
@@ -68,7 +68,7 @@ export default {
     }
   },
   computed: {
-    'allow': function () {
+    allow: function () {
       return !!(this.server && this.contact.content)
     }
   },
