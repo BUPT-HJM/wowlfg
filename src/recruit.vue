@@ -1,11 +1,11 @@
 <template>
   <div class="ui container">
-    <button class="ui green button" @click="modalCtrl('#recruit-modal')">发布{{module}}信息</button>
-    <h4 class="ui horizontal divider header"><i class="info icon"></i> {{module}}信息</h4>
+    <button class="ui green button" @click="modalCtrl('#recruit-modal')">发布招募信息</button>
+    <h4 class="ui horizontal divider header"><i class="info icon"></i> 招募信息</h4>
     <div class="ui form">
       <div class="inline fields">
-        <div class="field">
-          <select class="ui dropdown faction-select" v-model="filter.faction">
+        <div class="field two wide">
+          <select class="ui dropdown" v-model="filter.faction">
             <option value="">阵营</option>
             <option value="0">联盟</option>
             <option value="1">部落</option>
@@ -14,8 +14,8 @@
         <div class="field">
           <input type="text" v-model="filter.server" placeholder="服务器">
         </div>
-        <div class="field">
-          <select class="ui dropdown faction-select" v-model="filter.mainAccount">
+        <div class="field two wide">
+          <select class="ui dropdown" v-model="filter.mainAccount">
             <option value="{{option.key}}" v-for="option in options">{{option.value}}</option>
           </select>
         </div>
@@ -45,9 +45,6 @@
   <modal></modal>
 </template>
 <style lang="less">
-.faction-select {
-  width: 70px!important;
-}
 #recruit-tb {
   .hidden {
     display: none!important;
@@ -57,12 +54,10 @@
 <script>
 import modal from './components/recruit-form'
 import ref from './ref'
-import post from './mixins/post'
+import router from './router'
 export default {
-  mixins: [post],
   data: function () {
     return {
-      module: '招募',
       thead: ['阵营', '服务器', '招募形式', '时间', '描述', '联系方式'],
       options: [{
         key: 0,
@@ -90,6 +85,56 @@ export default {
       this.$emit('keyFilter', 'mainAccount', val)
     }
   },
+  events: {
+    keyFilter: function (key, val) {
+      var obj = this.activities
+      Object.keys(obj).map(function (i) {
+        if (val === '') {
+          obj[i].show = true
+          return
+        }
+        if (typeof val === 'boolean') {
+          if (!val) {
+            obj[i].show = false
+            return
+          }
+        } else {
+          if (key === 'server' || key === 'tags') {
+            var reg = new RegExp(val, 'g')
+            if (!reg.test(obj[i][key])) {
+              obj[i].show = false
+              return
+            }
+          } else {
+            if (+obj[i][key] !== +val) {
+              obj[i].show = false
+              return
+            }
+          }
+        }
+        obj[i].show = true
+      })
+    }
+  },
+  methods: {
+    modalCtrl: function (id) {
+      var self = this
+      var auth = ref.getAuth()
+      if (auth) {
+        $(id).modal({
+          onApprove: function () {
+            self.$broadcast('submit', this)
+            return false
+          }
+        }).modal('show')
+      } else {
+        router.go('/account')
+      }
+    }
+  },
+  components: {
+    modal: modal
+  },
   asyncData: function (resolve, reject) {
     ref.child('recruit').on('value', function (snapshot) {
       var val = snapshot.val()
@@ -102,9 +147,6 @@ export default {
         })
       }
     })
-  },
-  components: {
-    modal: modal
   }
 }
 </script>

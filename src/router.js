@@ -6,6 +6,9 @@ import account from './account'
 import user from './user'
 import tips from './tips'
 import group from './group'
+import groupForm from './group-form'
+import titans from './titans'
+import titansDetail from './titans-detail'
 
 Vue.use(VueRouter)
 Vue.use(VueAsyncData)
@@ -32,6 +35,15 @@ router.map({
   },
   'group': {
     component: group
+  },
+  'create-group': {
+    component: groupForm
+  },
+  'titans': {
+    component: titans
+  },
+  'titans/:id': {
+    component: titansDetail
   }
 })
 

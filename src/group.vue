@@ -1,92 +1,52 @@
 <template>
   <div class="ui container">
-    <button class="ui green button" @click="modalCtrl('#group-modal')">发布{{module}}信息</button>
-    <h4 class="ui horizontal divider header"><i class="info icon"></i> {{module}}信息</h4>
-    <div class="ui form">
-      <div class="inline fields">
-        <div class="field">
-          <select class="ui dropdown faction-select" v-model="filter.faction">
-            <option value="">阵营</option>
-            <option value="0">联盟</option>
-            <option value="1">部落</option>
-          </select>
+    <button class="ui green button" v-link="{path: '/create-group'}">发布组队信息</button>
+    <h4 class="ui horizontal divider header"><i class="info icon"></i> 组队信息</h4>
+    <div class="ui divided items">
+      <div class="item">
+        <div class="content">
+          <div class="header">箭头谷露营</div>
+          <div class="meta">
+            <span class="price">1200 美元</span>
+            <span class="stay">1 个月</span>
+          </div>
+          <div class="description">
+            <img src="http://semantic-ui.com/images/wireframe/short-paragraph.png" class="ui wireframe image">
+          </div>
+          <div class="extra">
+            <div class="ui label">IMAX</div>
+            <div class="ui label">额外<i class="globe icon"></i>种语言</div>
+          </div>
         </div>
-        <div class="field">
-          <input type="text" v-model="filter.server" placeholder="服务器">
+      </div>
+      <div class="item">
+        <div class="content">
+          <div class="header">Buck's Homebrew Stayaway</div>
+          <div class="meta">
+            <span class="price">1000 美元</span>
+            <span class="stay">2 周</span>
+          </div>
+          <div class="description">
+            <p></p>
+          </div>
         </div>
-        <div class="field">
-          <input type="text" v-model="filter.tags" placeholder="标签">
+      </div>
+      <div class="item">
+        <div class="content">
+          <div class="header">Astrology Camp</div>
+          <div class="meta">
+            <span class="price">1600 美元</span>
+            <span class="stay">6 周</span>
+          </div>
+          <div class="description">
+            <p></p>
+          </div>
         </div>
       </div>
     </div>
-    <table id="recruit-tb" class="ui single line table">
-      <thead>
-        <tr>
-          <th v-for="th in thead">{{th}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="activity in activities" :class="{hidden: !activity.show}">
-          <td v-if="activity.faction == 0">联盟</td>
-          <td v-else>部落</td>
-          <td>{{activity.server}}</td>
-          <td>标签</td>
-          <td>{{activity.startedAt}}</td>
-          <td v-if="activity.msg">{{activity.msg}}</td>
-          <td v-else>无</td>
-          <td>{{activity.contact.content}}</td>
-        </tr>
-      </tbody>
-    </table>
   </div>
-  <modal></modal>
 </template>
-<style lang="less">
-.faction-select {
-  width: 70px!important;
-}
-#recruit-tb {
-  .hidden {
-    display: none!important;
-  }
-}
-</style>
 <script>
-import post from './mixins/post'
-import modal from './components/group-form'
 export default {
-  mixins: [post],
-  data: function () {
-    return {
-      module: '组队',
-      thead: ['阵营', '服务器', '标签', '时间', '描述', '联系方式'],
-      options: [{
-        key: '',
-        value: '标签'
-      }, {
-        key: '0',
-        value: '成就'
-      }],
-      filter: {
-        faction: '',
-        server: '',
-        tags: ''
-      }
-    }
-  },
-  watch: {
-    'filter.faction': function (val) {
-      this.$emit('keyFilter', 'faction', val)
-    },
-    'filter.server': function (val) {
-      this.$emit('keyFilter', 'server', val)
-    },
-    'filter.mainAccount': function (val) {
-      this.$emit('keyFilter', 'tags', val)
-    }
-  },
-  components: {
-    modal: modal
-  }
 }
 </script>

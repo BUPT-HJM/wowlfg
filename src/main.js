@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import header from './components/header'
 import ref from './ref'
+import auth from './auth'
 
 var app = Vue.extend({
   data: function () {
@@ -12,10 +13,11 @@ var app = Vue.extend({
   created: function () {
     var token = $.cookie('access_token')
     var id = $.cookie('uid')
-    var auth = ref.getAuth()
     var self = this
     if (token) {
-      if (!auth) {
+      auth.done(function () {
+        self.$emit('user:login', id)
+      }).fail(function () {
         ref.authWithCustomToken(token, function (error, authData) {
           if (error) {
             $.removeCookie('uid')
@@ -24,9 +26,7 @@ var app = Vue.extend({
             self.$emit('user:login', id)
           }
         })
-      } else {
-        this.$emit('user:login', id)
-      }
+      })
     }
   },
   components: {
