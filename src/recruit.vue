@@ -11,7 +11,7 @@
             <option value="1">部落</option>
           </select>
         </div>
-        <div class="field">
+        <div class="field four wide">
           <input type="text" v-model="filter.server" placeholder="服务器">
         </div>
         <div class="field two wide">

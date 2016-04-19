@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import header from './components/header'
 import ref from './ref'
-import auth from './auth'
+import auth from './helper/auth'
 import filter from './filter'
+
 Vue.filter('responsibility', function (value) {
   return filter().responsibility(value)
 })
@@ -10,6 +11,11 @@ Vue.filter('responsibility', function (value) {
 Vue.filter('class', function (value) {
   return filter().class(value)
 })
+
+Vue.filter('contact', function (value) {
+  return filter().contactType(value)
+})
+
 var app = Vue.extend({
   data: function () {
     return {

@@ -9,6 +9,7 @@ import group from './group'
 import groupForm from './group-form'
 import titans from './titans'
 import titansDetail from './titans-detail'
+import notFound from './404'
 
 Vue.use(VueRouter)
 Vue.use(VueAsyncData)
@@ -44,6 +45,9 @@ router.map({
   },
   'titans/:id': {
     component: titansDetail
+  },
+  '404': {
+    component: notFound
   }
 })
 

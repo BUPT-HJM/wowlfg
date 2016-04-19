@@ -4,21 +4,24 @@
     <div class="ui form">
       <div class="field">
         <label>标题</label>
-        <input type="text" name="name" value="">
+        <input type="text" v-model="form.title">
       </div>
       <div class="field">
         <div class="three fields">
           <div class="field">
             <label>阵营</label>
-            <input type="text" name="name" value="">
+            <select class="ui dropdown" v-model="form.faction">
+              <option value="0">联盟</option>
+              <option value="1">部落</option>
+            </select>
           </div>
           <div class="field">
             <label>人数</label>
-            <input type="text" name="name" value="">
+            <input type="text" v-model="form.member">
           </div>
           <div class="field">
             <label>时间</label>
-            <input type="text" name="name" value="">
+            <input type="text" v-model="form.date">
           </div>
         </div>
       </div>
@@ -32,7 +35,7 @@
             </div>
           </div>
           <div class="field">
-            <input type="text" name="name" value="">
+            <input v-show="!form.secret.disable" type="text" v-model="form.secret.password">
           </div>
         </div>
       </div>
@@ -41,7 +44,7 @@
         <label>描述</label>
         <textarea rows="2"></textarea>
       </div>
-      <button type="button" class="ui button">发起</button>
+      <button type="button" class="ui button" :class="{disabled: !allow}" @click="submit">发起</button>
     </div>
   </div>
 </template>
@@ -51,9 +54,61 @@
   }
 </style>
 <script>
+  import ref from './ref'
+  import router from './router'
   export default {
+    data: function () {
+      return {
+        form: {
+          title: '',
+          faction: '0',
+          member: '',
+          date: '',
+          secret: {
+            disable: true,
+            password: ''
+          },
+          desc: ''
+        }
+      }
+    },
+    computed: {
+      allow: function () {
+        var password_allow = true
+        if (!this.form.secret.disable && !this.form.secret.password) {
+          password_allow = false
+        }
+        return this.form.title && this.form.member && this.form.date && password_allow
+      }
+    },
     ready: function () {
-      $('.ui.checkbox').checkbox()
+      var auth = ref.getAuth()
+      if (!auth) {
+        router.go('/account')
+        return
+      }
+      var self = this
+      $('.ui.checkbox').checkbox({
+        onChange: function () {
+          self.form.secret.disable = !self.form.secret.disable
+        }
+      })
+    },
+    methods: {
+      submit: function () {
+        var self = this
+        var data = JSON.parse(JSON.stringify(self.form))
+        data.createdAt = Wilddog.ServerValue.TIMESTAMP
+        data.auth = self.$root.uid
+        var titans = ref.child('titans').push(data, function (err) {
+          if (!err) {
+            var key = titans.key().replace(/^-/, '')
+            router.go('/titans/' + key)
+          } else {
+            console.log(err)
+          }
+        })
+      }
     }
   }
 </script>

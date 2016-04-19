@@ -74,7 +74,7 @@ export default {
   },
   ready: function () {
     ref.child('recruit').on('child_added', function () {
-      $('.ui.modal').modal('hide')
+      $('.recruit-modal').modal('hide')
     })
   },
   events: {

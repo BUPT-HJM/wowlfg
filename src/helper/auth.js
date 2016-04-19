@@ -1,4 +1,4 @@
-import ref from './ref'
+import ref from '../ref'
 function Auth () {
   this.auth = ref.getAuth()
 }

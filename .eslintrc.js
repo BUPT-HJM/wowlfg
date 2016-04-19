@@ -9,7 +9,8 @@ module.exports = {
   'globals': {
     '$': true,
     'Wilddog': true,
-    'VueAsyncData': true
+    'VueAsyncData': true,
+    'Clipboard': true
   },
   // add your custom rules here
   'rules': {

@@ -1,14 +1,18 @@
 function responsibility (value) {
+  var result = ['输出', '治疗', '防御']
+  return result[value - 1]
+}
+function contactType (value) {
   var result = ''
   switch (value) {
-    case 1:
-      result = '输出'
+    case 'qq':
+      result = 'QQ'
       break
-    case 2:
-      result = '治疗'
+    case 'wechat':
+      result = '微信'
       break
-    case 3:
-      result = '防御'
+    case 'battle':
+      result = '战网ID'
       break
   }
   return result
@@ -74,17 +78,17 @@ function class_data () {
   return array
 }
 function get_class (value) {
-  var class_array = class_data().map(function (currentValue, index) {
-    return currentValue[index].name
+  var class_array = class_data().map(function (currentValue) {
+    return currentValue.name
   })
   return class_array[value]
 }
-
 var filter = function () {
   return {
     responsibility: responsibility,
     class: get_class,
-    classArray: class_data()
+    classArray: class_data(),
+    contactType: contactType
   }
 }
 
