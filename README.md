@@ -1,6 +1,8 @@
 # lfg
 
-> A Vue.js project
+> 一个Vue项目，wower玩家发起互动与招募，以及一些游戏经验的Web应用。
+
+> 在线地址：http://54.83.146.225
 
 ## Build Setup
 
@@ -23,5 +25,3 @@ npm run e2e
 # run all tests
 npm test
 ```
-
-For detailed explanation on how things work, checkout the [guide](https://github.com/vuejs-templates/webpack#vue-webpack-boilerplate) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
