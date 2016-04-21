@@ -17,7 +17,7 @@
         {{info.desc}}
       </p>
       <div class="titans-card-ft">
-        <button type="button" class="ui basic small button" @click="joinCtrl">报名</button>
+        <button type="button" class="ui basic small button" class="{disabled: joined}" @click="joinCtrl">报名</button>
         <button type="button" class="ui basic small button share-btn" data-content="复制成功" data-position="top left">
           <i class="icon share"></i>
           分享
@@ -123,6 +123,7 @@
 <script>
   import filter from './filter'
   import ref from './ref'
+  import router from './router'
   var _id = ''
   var _$titans = ''
   export default {
@@ -137,7 +138,8 @@
           talent: ''
         },
         info: {},
-        wowClass: filter().classArray
+        wowClass: filter().classArray,
+        joined: false
       }
     },
     computed: {
@@ -163,6 +165,8 @@
           resolve({
             info: val
           })
+        } else {
+          router.redirect('/404')
         }
       })
     },
@@ -201,8 +205,10 @@
         _$titans.child('list').push(data)
       },
       'modal-close': function () {
+        var self = this
         _$titans.child('list').on('child_added', function () {
           $('.titans-join').modal('hide')
+          self.joined = true
         })
       }
     },

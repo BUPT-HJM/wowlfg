@@ -23,7 +23,7 @@
         url: '/static/post/' + this.$route.params.id + '.md',
         error: function (XMLHttpRequest, textStatus, errorThrown) {
           if (textStatus === 'error') {
-            router.go('/404')
+            router.redirect('/404')
           }
         }
       })
