@@ -17,7 +17,7 @@
         {{info.desc}}
       </p>
       <div class="titans-card-ft">
-        <button type="button" class="ui basic small button" class="{disabled: joined}" @click="joinCtrl">报名</button>
+        <button type="button" class="ui basic small button" :class="{disabled: isJoined}" @click="joinCtrl">报名</button>
         <button type="button" class="ui basic small button share-btn" data-content="复制成功" data-position="top left">
           <i class="icon share"></i>
           分享
@@ -139,7 +139,7 @@
         },
         info: {},
         wowClass: filter().classArray,
-        joined: false
+        isJoined: false
       }
     },
     computed: {
@@ -172,13 +172,7 @@
     },
     methods: {
       joinCtrl: function () {
-        var self = this
-        $('.titans-join').modal({
-          onApprove: function () {
-            self.$emit('submit', this)
-            return false
-          }
-        }).modal('show')
+        $('.titans-join').modal('show')
       }
     },
     events: {
@@ -208,7 +202,7 @@
         var self = this
         _$titans.child('list').on('child_added', function () {
           $('.titans-join').modal('hide')
-          self.joined = true
+          self.isJoined = true
         })
       }
     },
@@ -226,6 +220,12 @@
       })
       this.$emit('share')
       this.$emit('modal-close')
+      $('.titans-join').modal({
+        onApprove: function () {
+          self.$emit('submit', this)
+          return false
+        }
+      })
     }
   }
 </script>
