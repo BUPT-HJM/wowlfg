@@ -56,7 +56,8 @@ router.map({
 })
 
 router.redirect({
-  '*': '/404'
+  '*': '/404',
+  '/': '/index'
 })
 
 export default router
