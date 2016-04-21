@@ -5,6 +5,7 @@ import recruit from './recruit'
 import account from './account'
 import user from './user'
 import tips from './tips'
+import tipsDetail from './tips-detail'
 import group from './group'
 import groupForm from './group-form'
 import titans from './titans'
@@ -34,6 +35,9 @@ router.map({
   'tips': {
     component: tips
   },
+  'tips/:id': {
+    component: tipsDetail
+  },
   'group': {
     component: group
   },
@@ -52,7 +56,7 @@ router.map({
 })
 
 router.redirect({
-  '*': '/index'
+  '*': '/404'
 })
 
 export default router

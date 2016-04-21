@@ -10,7 +10,8 @@ module.exports = {
     '$': true,
     'Wilddog': true,
     'VueAsyncData': true,
-    'Clipboard': true
+    'Clipboard': true,
+    'marked': true
   },
   // add your custom rules here
   'rules': {
