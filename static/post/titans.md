@@ -29,7 +29,7 @@
 + 萨满 增强 [万事顺意](http://www.battlenet.com.cn/wow/zh/character/%E5%BD%B1%E4%B9%8B%E5%93%80%E4%BC%A4/%E4%B8%87%E4%BA%8B%E9%A1%BA%E6%84%8F/simple) 元素 [千幻绝影](http://www.battlenet.com.cn/wow/zh/character/%E7%BA%A2%E4%BA%91%E5%8F%B0%E5%9C%B0/%E5%8D%83%E5%B9%BB%E7%BB%9D%E5%BD%B1/simple)
 + 术士 痛苦 [三井兽丶](http://www.battlenet.com.cn/wow/zh/character/%E5%BD%B1%E4%B9%8B%E5%93%80%E4%BC%A4/%E4%B8%89%E4%BA%95%E5%85%BD%E4%B8%B6/simple)
 + 德鲁伊 熊 [萌萌哒咕咕](http://www.battlenet.com.cn/wow/zh/character/%E9%A3%8E%E8%A1%8C%E8%80%85/%E8%90%8C%E8%90%8C%E5%93%92%E5%92%95%E5%92%95/simple) 猫 [调皮又打第一](http://www.battlenet.com.cn/wow/zh/character/%E8%90%A8%E5%B0%94/%E8%B0%83%E7%9A%AE%E5%8F%88%E6%89%93%E7%AC%AC%E4%B8%80/simple) [观人春潮](http://www.battlenet.com.cn/wow/zh/character/%E5%BD%B1%E4%B9%8B%E5%93%80%E4%BC%A4/%E8%A7%82%E4%BA%BA%E6%98%A5%E6%BD%AE/simple) [砍你十条街](http://www.battlenet.com.cn/wow/zh/character/%E8%BF%9C%E5%8F%A4%E6%B5%B7%E6%BB%A9/%E7%A0%8D%E4%BD%A0%E5%8D%81%E6%9D%A1%E8%A1%97/simple)
-+ 战士 狂暴 [百煉鋼丶](http://www.battlenet.com.cn/wow/zh/character/%E5%9F%83%E5%BE%B7%E8%90%A8%E6%8B%89/%E7%99%BE%E7%85%89%E9%8B%BC%E4%B8%B6/simple) [该隐灬左手](http://www.battlenet.com.cn/wow/zh/character/%E6%A0%BC%E9%9B%B7%E8%BF%88%E6%81%A9/%E8%AF%A5%E9%9A%90%E7%81%AC%E5%B7%A6%E6%89%8B/simple)
++ 战士 狂暴 [百煉鋼丶](http://www.battlenet.com.cn/wow/zh/character/%E5%9F%83%E5%BE%B7%E8%90%A8%E6%8B%89/%E7%99%BE%E7%85%89%E9%8B%BC%E4%B8%B6/simple) [该隐灬左手](http://www.battlenet.com.cn/wow/zh/character/%E6%A0%BC%E9%9B%B7%E8%BF%88%E6%81%A9/%E8%AF%A5%E9%9A%90%E7%81%AC%E5%B7%A6%E6%89%8B/simple) [Sobelzs](http://www.battlenet.com.cn/wow/zh/character/%E7%86%8A%E7%8C%AB%E9%85%92%E4%BB%99/Sobelzs/simple)
 
 ### 奥杜尔困难模式
 

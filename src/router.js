@@ -10,6 +10,8 @@ import group from './group'
 import groupForm from './group-form'
 import titans from './titans'
 import titansDetail from './titans-detail'
+import titansHelper from './titans-helper'
+import titansGroup from './titans-group'
 import notFound from './404'
 
 Vue.use(VueRouter)
@@ -49,6 +51,12 @@ router.map({
   },
   'titans/:id': {
     component: titansDetail
+  },
+  'titans-helper': {
+    component: titansHelper
+  },
+  'titans-group': {
+    component: titansGroup
   },
   '404': {
     component: notFound

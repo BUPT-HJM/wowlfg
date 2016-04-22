@@ -29,6 +29,13 @@
       })
       req.done(function (data) {
         self.text = data
+        self.$nextTick(function () {
+          self.$emit('replacement')
+        })
+      })
+    },
+    events: {
+      replacement: function () {
         var hostname = window.location.hostname
         var reg = new RegExp(hostname, 'g')
         $('.markdown-body a').each(function () {
@@ -37,7 +44,7 @@
             $(this).attr('target', '_blank')
           }
         })
-      })
+      }
     }
   }
 </script>

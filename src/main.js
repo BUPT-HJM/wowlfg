@@ -8,6 +8,10 @@ Vue.filter('responsibility', function (value) {
   return filter().responsibility(value)
 })
 
+Vue.filter('profession', function (value) {
+  return filter().professionFilter(value)
+})
+
 Vue.filter('class', function (value) {
   return filter().class(value)
 })
