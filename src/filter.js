@@ -7,11 +7,9 @@ function professionFilter (value) {
   var array = profession.concat()
   if (Array.isArray(value)) {
     var result = value.map(function (item, index) {
-      return array[index]
+      return array[item]
     })
     return result.join()
-  } else {
-    return profession[0]
   }
 }
 function contactType (value) {
