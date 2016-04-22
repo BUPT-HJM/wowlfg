@@ -111,12 +111,15 @@
           self.list = val
         }
       })
-      child.on('child_added', function () {
-        self.isPost = true
-        $('.titans-helper-modal').modal('hide')
-      })
     },
     ready: function () {
+      var self = this
+      $('.titans-helper-modal').modal({
+        onApprove: function () {
+          self.$emit('submit', this)
+          return false
+        }
+      })
       this.$emit('dropdown')
     },
     computed: {
@@ -126,19 +129,17 @@
     },
     methods: {
       modalCtrl: function () {
-        var self = this
-        $('.titans-helper-modal').modal({
-          onApprove: function () {
-            self.$emit('submit', this)
-            return false
-          }
-        }).modal('show')
+        $('.titans-helper-modal').modal('show')
       }
     },
     events: {
       submit: function () {
+        var self = this
         var data = this.post
-        ref.child('titans').child('helper').push(data)
+        ref.child('titans').child('helper').push(data, function () {
+          $('.titans-helper-modal').modal('hide')
+          self.isPost = true
+        })
       },
       dropdown: function () {
         var self = this

@@ -166,7 +166,7 @@
             info: val
           })
         } else {
-          router.redirect('/404')
+          router.replace('/404')
         }
       })
     },
@@ -196,14 +196,14 @@
       submit: function () {
         var self = this
         var data = JSON.parse(JSON.stringify(self.join))
-        _$titans.child('list').push(data)
+        _$titans.child('list').push(data, function () {
+          self.$emit('modal-close')
+        })
       },
       'modal-close': function () {
         var self = this
-        _$titans.child('list').on('child_added', function () {
-          $('.titans-join').modal('hide')
-          self.isJoined = true
-        })
+        $('.titans-join').modal('hide')
+        self.isJoined = true
       }
     },
     created: function () {
@@ -219,7 +219,6 @@
         }
       })
       this.$emit('share')
-      this.$emit('modal-close')
       $('.titans-join').modal({
         onApprove: function () {
           self.$emit('submit', this)
