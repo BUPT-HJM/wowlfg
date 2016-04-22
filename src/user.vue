@@ -67,6 +67,20 @@ export default {
     if (auth) {
       this.email = auth.password.email
     }
+    this.$emit('nameChanged')
+  },
+  events: {
+    'nameChanged': function () {
+      var self = this
+      var uid = this.$root.uid
+      ref.child('users/' + uid + '/username').on('value', function (snapshot) {
+        var val = snapshot.val()
+        if (val) {
+          self.$root.screenname = val
+          $.cookie('screenname', val, { expires: 7, path: '/' })
+        }
+      })
+    }
   },
   methods: {
     logout: function () {
@@ -74,6 +88,7 @@ export default {
       this.$root.$data.uid = ''
       $.removeCookie('access_token', {path: '/'})
       $.removeCookie('uid', {path: '/'})
+      $.removeCookie('screenname', {path: '/'})
       ref.unauth()
       router.replace('/')
     },

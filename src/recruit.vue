@@ -34,10 +34,10 @@
           <td>{{activity.server}}</td>
           <td v-if="activity.mainAccount == 0">主招募</td>
           <td v-else>被招募</td>
-          <td>{{activity.startedAt}}</td>
+          <td>{{activity.startedAt | date}}</td>
           <td v-if="activity.msg">{{activity.msg}}</td>
           <td v-else>无</td>
-          <td>{{activity.contact.content}}</td>
+          <td>{{activity.contact.type | contact}}: {{activity.contact.content}}</td>
         </tr>
       </tbody>
     </table>
@@ -60,6 +60,9 @@ export default {
     return {
       thead: ['阵营', '服务器', '招募形式', '时间', '描述', '联系方式'],
       options: [{
+        key: '',
+        value: '招募形式'
+      }, {
         key: 0,
         value: '主招募'
       }, {
@@ -70,7 +73,7 @@ export default {
       filter: {
         faction: '',
         server: '',
-        mainAccount: 0
+        mainAccount: ''
       }
     }
   },

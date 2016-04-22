@@ -11,7 +11,10 @@
       <a class="item" v-link="{ path: '/titans' }">Titans</a>
       <div class="right menu">
         <a class="item" v-link="{ path: '/account' }" v-if="!auth">登入</a>
-        <a class="item" v-link="{ name: 'user', params: { uid: uid }}" v-else>{{uid}}</a>
+        <a class="item" v-link="{ name: 'user', params: { uid: uid }}" v-else>
+          <span v-if="!screenname">{{uid}}</span>
+          <span v-else>{{screenname}}</span>
+        </a>
         <a class="item">帮助</a>
       </div>
     </div>
@@ -19,6 +22,6 @@
 </template>
 <script>
   export default {
-    props: ['uid', 'auth']
+    props: ['uid', 'auth', 'screenname']
   }
 </script>

@@ -83,12 +83,25 @@ function get_class (value) {
   })
   return class_array[value]
 }
+
+function date (value) {
+  var date = new Date(value)
+  var leftpad = function (val) {
+    if (val < 10) {
+      return '0' + val
+    }
+    return val
+  }
+  return date.getFullYear() + '.' + leftpad(date.getMonth() + 1) + '.' + leftpad(date.getDate())
+}
+
 var filter = function () {
   return {
     responsibility: responsibility,
     class: get_class,
     classArray: class_data(),
-    contactType: contactType
+    contactType: contactType,
+    date: date
   }
 }
 

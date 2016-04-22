@@ -16,11 +16,16 @@ Vue.filter('contact', function (value) {
   return filter().contactType(value)
 })
 
+Vue.filter('date', function (value) {
+  return filter().date(value)
+})
+
 var app = Vue.extend({
   data: function () {
     return {
       islogin: false,
-      uid: ''
+      uid: '',
+      screenname: ''
     }
   },
   created: function () {
@@ -33,8 +38,9 @@ var app = Vue.extend({
       }).fail(function () {
         ref.authWithCustomToken(token, function (error, authData) {
           if (error) {
-            $.removeCookie('uid')
-            $.removeCookie('access_token')
+            $.removeCookie('uid', {path: '/'})
+            $.removeCookie('access_token', {path: '/'})
+            $.removeCookie('screenname', {path: '/'})
           } else {
             self.$emit('user:login', id)
           }
@@ -49,6 +55,25 @@ var app = Vue.extend({
     'user:login': function (id) {
       this.islogin = true
       this.uid = id
+      var screenname = $.cookie('screenname')
+      if (!screenname) {
+        this.$emit('getUserName', id)
+      } else {
+        this.screenname = screenname
+      }
+    },
+    'getUserName': function (id) {
+      var self = this
+      ref.child('users').child(id).on('value', function (snapshot) {
+        var val = snapshot.val()
+        if (val) {
+          console.log(val)
+          if (val.username) {
+            self.screenname = val.username
+            $.cookie('screenname', val.username, { expires: 7, path: '/' })
+          }
+        }
+      })
     }
   }
 })
