@@ -11,9 +11,12 @@
       <a class="item" v-link="{ path: '/titans' }">Titans</a>
       <div class="right menu">
         <a class="item" v-link="{ path: '/account' }" v-if="!auth">登入</a>
-        <a class="item" v-link="{ name: 'user', params: { uid: uid }}" v-else>
-          <span v-if="!screenname">{{uid}}</span>
-          <span v-else>{{screenname}}</span>
+        <a class="item" v-link="{ name: 'user', params: { uid: user.uid }}" v-else>
+          <span v-if="!user.screenname">{{user.uid}}</span>
+          <span v-else>{{user.screenname}}</span>
+          <div class="ui teal label" v-if="user.admin">
+            管理员
+          </div>
         </a>
         <a class="item">帮助</a>
       </div>
@@ -22,6 +25,6 @@
 </template>
 <script>
   export default {
-    props: ['uid', 'auth', 'screenname']
+    props: ['user', 'auth']
   }
 </script>

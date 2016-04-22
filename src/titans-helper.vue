@@ -7,7 +7,7 @@
     <div class="ui horizontal divider">
       INFO
     </div>
-    <table class="ui table celled padded table">
+    <table class="ui table celled padded table titans-helper-tb">
       <thead>
         <tr>
           <th class="single line">服务器</th>
@@ -15,6 +15,7 @@
           <th>专业</th>
           <th>联系方式</th>
           <th>留言</th>
+          <th class="control">操作</th>
         </tr>
       </thead>
       <tbody>
@@ -25,6 +26,9 @@
           <td>{{item.profession | profession}}</td>
           <td>{{item.contact.type | contact}}: {{item.contact.content}}</td>
           <td>{{item.msg}}</td>
+          <td>
+            <button type="button" class="ui button" @click="deleteCtrl($key)">删除</button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -80,7 +84,42 @@
       <div class="ui positive right labeled icon button" :class="{disabled: !allow}">提交 <i class="checkmark icon"></i> </div>
     </div>
   </div>
+
+  <div class="ui small basic modal delete-confirm" v-if="isAdmin">
+    <div class="ui icon header">
+      <i class="archive icon"></i>
+      删除信息
+    </div>
+    <div class="content">
+      <p>你确认要删除这条信息吗？删除后无法恢复。</p>
+    </div>
+    <div class="actions">
+      <div class="ui red basic cancel inverted button">
+        <i class="remove icon"></i>
+        No
+      </div>
+      <div class="ui green ok inverted button">
+        <i class="checkmark icon"></i>
+        Yes
+      </div>
+    </div>
+  </div>
+
 </template>
+<style lang="less">
+  .titans-helper-tb {
+    tr {
+      td {
+        &:nth-child(3),&:nth-child(5) {
+          width: 20%
+        }
+      }
+    }
+    .control {
+      width: 10%;
+    }
+  }
+</style>
 <script>
   import {profession} from './data'
   import ref from './ref'
@@ -99,7 +138,8 @@
         },
         profession: profession,
         list: {},
-        isPost: false
+        isPost: false,
+        current: ''
       }
     },
     created: function () {
@@ -125,11 +165,35 @@
     computed: {
       allow: function () {
         return !!(this.post.profession.length > 0 && this.post.server && this.post.contact.content)
+      },
+      isAdmin: function () {
+        return this.$root.user.admin
+      }
+    },
+    watch: {
+      isAdmin: function (val) {
+        var self = this
+        if (val) {
+          $('.delete-confirm').modal({
+            onApprove: function () {
+              ref.child('titans/helper/' + self.current).remove(function (err) {
+                if (!err) {
+                  $('.delete-confirm').modal('hide')
+                }
+              })
+              return false
+            }
+          })
+        }
       }
     },
     methods: {
       modalCtrl: function () {
         $('.titans-helper-modal').modal('show')
+      },
+      deleteCtrl: function (val) {
+        this.current = val
+        $('.delete-confirm').modal('show')
       }
     },
     events: {

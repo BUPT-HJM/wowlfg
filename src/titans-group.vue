@@ -99,7 +99,7 @@
         var self = this
         var data = JSON.parse(JSON.stringify(self.form))
         data.createdAt = Wilddog.ServerValue.TIMESTAMP
-        data.auth = self.$root.uid
+        data.auth = self.$root.user.uid
         var titans = ref.child('titans').push(data, function (err) {
           if (!err) {
             var key = titans.key().replace(/^-/, '')

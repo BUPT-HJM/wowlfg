@@ -50,7 +50,7 @@ export default {
     }
   },
   asyncData: function (resolve, reject) {
-    var uid = this.$root.uid
+    var uid = this.$root.user.uid
     ref.child('users/' + uid).on('value', function (snapshot) {
       var val = snapshot.val()
       if (val) {
@@ -84,8 +84,8 @@ export default {
   },
   methods: {
     logout: function () {
-      this.$root.$data.islogin = false
-      this.$root.$data.uid = ''
+      this.$root.islogin = false
+      this.$root.user.uid = ''
       $.removeCookie('access_token', {path: '/'})
       $.removeCookie('uid', {path: '/'})
       $.removeCookie('screenname', {path: '/'})
@@ -95,7 +95,7 @@ export default {
     save: function () {
       var self = this
       if (self.edit) {
-        var uid = self.$root.uid
+        var uid = self.$root.user.uid
         ref.child('users/' + uid).set({
           username: self.username,
           battleID: self.battleID

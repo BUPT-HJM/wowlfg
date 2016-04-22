@@ -5,9 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>lfg</title>
     <link rel="stylesheet" href="static/css/semantic.min.css">
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="static/css/outdatedbrowser.min.css">
+    <script src="static/js/outdatedbrowser.min.js"></script>
+    <script>
+    //event listener: DOM ready
+    function addLoadEvent(func) {
+      var oldonload = window.onload;
+      if (typeof window.onload != 'function') {
+          window.onload = func;
+      } else {
+          window.onload = function() {
+              if (oldonload) {
+                  oldonload();
+              }
+              func();
+          }
+      }
+    }
+    //call plugin function after DOM ready
+    addLoadEvent(function(){
+      var div = document.createElement('div')
+      div.id = 'outdated';
+      document.body.appendChild(div);
+      outdatedBrowser({
+          bgColor: '#f25648',
+          color: '#ffffff',
+          lowerThan: 'transform',
+          languagePath: 'static/css/lang/zh-cn.html'
+      })
+    });
+    </script>
+    <![endif]-->
   </head>
   <body>
-    <navigator :uid="uid" :auth="islogin" :screenname="screenname"></navigator>
+    <navigator :user="user" :auth="islogin"></navigator>
     <router-view></router-view>
     <!-- built files will be auto injected -->
     <script src="static/js/jquery-1.12.2.min.js"></script>

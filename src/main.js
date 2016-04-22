@@ -28,8 +28,11 @@ var app = Vue.extend({
   data: function () {
     return {
       islogin: false,
-      uid: '',
-      screenname: ''
+      user: {
+        uid: '',
+        screenname: '',
+        admin: false
+      }
     }
   },
   created: function () {
@@ -58,23 +61,23 @@ var app = Vue.extend({
   events: {
     'user:login': function (id) {
       this.islogin = true
-      this.uid = id
-      var screenname = $.cookie('screenname')
-      if (!screenname) {
-        this.$emit('getUserName', id)
-      } else {
-        this.screenname = screenname
-      }
+      this.user.uid = id
+      this.$emit('getUserInfo', id)
     },
-    'getUserName': function (id) {
+    'getUserInfo': function (id) {
       var self = this
       ref.child('users').child(id).on('value', function (snapshot) {
         var val = snapshot.val()
+        var screenname = $.cookie('screenname')
         if (val) {
-          console.log(val)
           if (val.username) {
-            self.screenname = val.username
-            $.cookie('screenname', val.username, { expires: 7, path: '/' })
+            if (!screenname) {
+              $.cookie('screenname', val.username, { expires: 7, path: '/' })
+            }
+            self.user.screenname = val.username
+          }
+          if (val.admin) {
+            self.user.admin = true
           }
         }
       })
