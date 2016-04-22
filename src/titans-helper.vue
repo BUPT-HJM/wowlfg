@@ -15,7 +15,7 @@
           <th>专业</th>
           <th>联系方式</th>
           <th>留言</th>
-          <th class="control">操作</th>
+          <th class="control" v-if="isAdmin">操作</th>
         </tr>
       </thead>
       <tbody>
@@ -26,7 +26,7 @@
           <td>{{item.profession | profession}}</td>
           <td>{{item.contact.type | contact}}: {{item.contact.content}}</td>
           <td>{{item.msg}}</td>
-          <td>
+          <td v-if="isAdmin">
             <button type="button" class="ui button" @click="deleteCtrl($key)">删除</button>
           </td>
         </tr>
