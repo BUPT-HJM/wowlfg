@@ -73,11 +73,11 @@ export default {
     }
   },
   events: {
-    submit: function (context) {
+    submit: function () {
       var self = this
       var data = JSON.parse(JSON.stringify(self.$data))
       data.startedAt = Wilddog.ServerValue.TIMESTAMP
-      data.auth = self.$root.uid
+      data.auth = self.$root.user.uid
       ref.child('recruit').push(data, function () {
         $('.recruit-modal').modal('hide')
       })
