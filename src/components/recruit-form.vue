@@ -72,18 +72,15 @@ export default {
       return !!(this.server && this.contact.content)
     }
   },
-  ready: function () {
-    ref.child('recruit').on('child_added', function () {
-      $('.recruit-modal').modal('hide')
-    })
-  },
   events: {
     submit: function (context) {
       var self = this
       var data = JSON.parse(JSON.stringify(self.$data))
       data.startedAt = Wilddog.ServerValue.TIMESTAMP
       data.auth = self.$root.uid
-      ref.child('recruit').push(data)
+      ref.child('recruit').push(data, function () {
+        $('.recruit-modal').modal('hide')
+      })
     }
   }
 }

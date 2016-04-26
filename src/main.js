@@ -2,27 +2,7 @@ import Vue from 'vue'
 import header from './components/header'
 import ref from './ref'
 import auth from './helper/auth'
-import filter from './filter'
-
-Vue.filter('responsibility', function (value) {
-  return filter().responsibility(value)
-})
-
-Vue.filter('profession', function (value) {
-  return filter().professionFilter(value)
-})
-
-Vue.filter('class', function (value) {
-  return filter().class(value)
-})
-
-Vue.filter('contact', function (value) {
-  return filter().contactType(value)
-})
-
-Vue.filter('date', function (value) {
-  return filter().date(value)
-})
+import './filter'
 
 var app = Vue.extend({
   data: function () {

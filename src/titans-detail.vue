@@ -121,7 +121,7 @@
   }
 </style>
 <script>
-  import filter from './filter'
+  import {class_data} from './data'
   import ref from './ref'
   import router from './router'
   var _id = ''
@@ -138,7 +138,7 @@
           talent: ''
         },
         info: {},
-        wowClass: filter().classArray,
+        wowClass: class_data,
         isJoined: false
       }
     },

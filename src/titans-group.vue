@@ -78,7 +78,7 @@
         if (!this.form.secret.disable && !this.form.secret.password) {
           password_allow = false
         }
-        return this.form.title && this.form.member && this.form.date && password_allow
+        return !!(this.form.title && this.form.member && this.form.date) && password_allow
       }
     },
     ready: function () {

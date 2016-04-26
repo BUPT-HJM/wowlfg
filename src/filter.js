@@ -1,7 +1,10 @@
+import Vue from 'vue'
+
 function responsibility (value) {
   var result = ['输出', '治疗', '防御']
   return result[value - 1]
 }
+
 import {profession} from './data'
 function professionFilter (value) {
   var array = profession.concat()
@@ -12,6 +15,12 @@ function professionFilter (value) {
     return result.join()
   }
 }
+
+import {activity} from './data'
+function activityType (value) {
+  return activity[value]
+}
+
 function contactType (value) {
   var result = ''
   switch (value) {
@@ -27,8 +36,8 @@ function contactType (value) {
   }
   return result
 }
-import {class_data} from './data'
 
+import {class_data} from './data'
 function get_class (value) {
   var class_array = class_data.map(function (currentValue) {
     return currentValue.name
@@ -47,15 +56,40 @@ function date (value) {
   return date.getFullYear() + '.' + leftpad(date.getMonth() + 1) + '.' + leftpad(date.getDate())
 }
 
-var filter = function () {
-  return {
-    responsibility: responsibility,
-    class: get_class,
-    classArray: class_data,
-    contactType: contactType,
-    date: date,
-    professionFilter: professionFilter
+import {version} from './data'
+function get_version (value) {
+  for (var i = 0; i < version.length; i++) {
+    if (value === version[i].type) {
+      return version[i].val
+    }
   }
+  return null
 }
 
-export default filter
+Vue.filter('responsibility', function (value) {
+  return responsibility(value)
+})
+
+Vue.filter('profession', function (value) {
+  return professionFilter(value)
+})
+
+Vue.filter('class', function (value) {
+  return get_class(value)
+})
+
+Vue.filter('contact', function (value) {
+  return contactType(value)
+})
+
+Vue.filter('date', function (value) {
+  return date(value)
+})
+
+Vue.filter('activity', function (value) {
+  return activityType(value)
+})
+
+Vue.filter('version', function (value) {
+  return get_version(value)
+})

@@ -3,43 +3,26 @@
     <button class="ui green button" v-link="{path: '/create-group'}">发布组队信息</button>
     <h4 class="ui horizontal divider header"><i class="info icon"></i> 组队信息</h4>
     <div class="ui divided items">
-      <div class="item">
+      <div class="item" v-for="item in list">
         <div class="content">
-          <div class="header">箭头谷露营</div>
+          <div class="header">{{item.title}}</div>
           <div class="meta">
-            <span class="price">1200 美元</span>
-            <span class="stay">1 个月</span>
+            <span>{{item.date}}</span>
+            <span>{{item.time}}</span>
+            <span v-if="item.member">{{item.member}}人</span>
+            <span>{{item.server}}</span>
           </div>
-          <div class="description">
-            <img src="http://semantic-ui.com/images/wireframe/short-paragraph.png" class="ui wireframe image">
+          <div class="description" v-if="item.desc">
+            {{item.desc}}
+          </div>
+          <div class="">
+            {{item.contact.type | contact}}: {{item.contact.content}}
           </div>
           <div class="extra">
-            <div class="ui label">IMAX</div>
-            <div class="ui label">额外<i class="globe icon"></i>种语言</div>
-          </div>
-        </div>
-      </div>
-      <div class="item">
-        <div class="content">
-          <div class="header">Buck's Homebrew Stayaway</div>
-          <div class="meta">
-            <span class="price">1000 美元</span>
-            <span class="stay">2 周</span>
-          </div>
-          <div class="description">
-            <p></p>
-          </div>
-        </div>
-      </div>
-      <div class="item">
-        <div class="content">
-          <div class="header">Astrology Camp</div>
-          <div class="meta">
-            <span class="price">1600 美元</span>
-            <span class="stay">6 周</span>
-          </div>
-          <div class="description">
-            <p></p>
+            <div class="ui label" v-if="item.faction == 0">联盟</div>
+            <div class="ui label" v-else>部落</div>
+            <div class="ui label">{{item.type | activity}}</div>
+            <div class="ui label">{{item.version | version}}</div>
           </div>
         </div>
       </div>
@@ -47,6 +30,21 @@
   </div>
 </template>
 <script>
+import ref from './ref'
 export default {
+  data: function () {
+    return {
+      list: {}
+    }
+  },
+  created: function () {
+    var self = this
+    ref.child('group').on('value', function (snapshot) {
+      var val = snapshot.val()
+      if (val) {
+        self.list = val
+      }
+    })
+  }
 }
 </script>
