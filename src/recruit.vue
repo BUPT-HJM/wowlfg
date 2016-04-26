@@ -21,7 +21,7 @@
         </div>
       </div>
     </div>
-    <table id="recruit-tb" class="ui single line table">
+    <table id="recruit-tb" class="ui padded table">
       <thead>
         <tr>
           <th v-for="th in thead">{{th}}</th>
@@ -48,6 +48,13 @@
 #recruit-tb {
   .hidden {
     display: none!important;
+  }
+  tr {
+    td,th {
+      &:nth-child(5) {
+        width: 25%;
+      }
+    }
   }
 }
 </style>

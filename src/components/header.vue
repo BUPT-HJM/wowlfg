@@ -18,7 +18,7 @@
             管理员
           </div>
         </a>
-        <a class="item">帮助</a>
+        <a class="item" v-link="{path: '/help'}">帮助</a>
       </div>
     </div>
   </div>

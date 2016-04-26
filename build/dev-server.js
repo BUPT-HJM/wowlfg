@@ -56,6 +56,7 @@ app.use(hotMiddleware)
 
 // serve pure static assets
 app.use('/static', express.static('./static'))
+app.use('/node_modules', express.static('./node_modules'))
 
 module.exports = app.listen(8080, function (err) {
   if (err) {

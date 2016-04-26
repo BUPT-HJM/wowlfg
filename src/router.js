@@ -4,6 +4,8 @@ import home from './home'
 import recruit from './recruit'
 import account from './account'
 import user from './user'
+import userInfo from './user-info'
+import userPost from './user-post'
 import tips from './tips'
 import tipsDetail from './tips-detail'
 import group from './group'
@@ -12,6 +14,8 @@ import titans from './titans'
 import titansDetail from './titans-detail'
 import titansHelper from './titans-helper'
 import titansGroup from './titans-group'
+import post from './post'
+import help from './help'
 import notFound from './404'
 
 Vue.use(VueRouter)
@@ -32,7 +36,16 @@ router.map({
   },
   'user/:uid': {
     name: 'user',
-    component: user
+    component: user,
+    subRoutes: {
+      '/': {
+        component: userInfo
+      },
+      'posts': {
+        name: 'post',
+        component: userPost
+      }
+    }
   },
   'tips': {
     component: tips
@@ -57,6 +70,12 @@ router.map({
   },
   'titans-group': {
     component: titansGroup
+  },
+  'post': {
+    component: post
+  },
+  'help': {
+    component: help
   },
   '404': {
     component: notFound

@@ -11,13 +11,15 @@ module.exports = {
     'Wilddog': true,
     'VueAsyncData': true,
     'Clipboard': true,
-    'marked': true
+    'marked': true,
+    'Medium': true
   },
   // add your custom rules here
   'rules': {
     // allow paren-less arrow functions
     'arrow-parens': 0,
     // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
+    'no-new': 0,
   }
 }
