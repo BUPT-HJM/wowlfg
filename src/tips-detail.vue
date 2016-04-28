@@ -3,7 +3,7 @@
     <div class="markdown-body">
       <div class="tips-detail-toolbar">
         <div class="ui small basic icon buttons">
-          <button class="ui button"><i class="share icon"></i></button>
+          <button class="ui button share-btn" data-content="复制成功" data-position="top left"><i class="share icon"></i></button>
           <button class="ui button" @click="edit" v-if="myself"><i class="edit icon"></i></button>
         </div>
       </div>
@@ -87,6 +87,23 @@
             $(this).attr('target', '_blank')
           }
         })
+      },
+      share: function () {
+        var self = this
+        $('.share-btn').popup({
+          on: 'manual'
+        })
+        var clipboard = new Clipboard('.share-btn', {
+          text: function (trigger) {
+            return '我分享了[' + self.title + ']的文章给你，快来看看吧 \r\n' + window.location.href
+          }
+        })
+        clipboard.on('success', function (e) {
+          $('.share-btn').popup('show')
+          setTimeout(function () {
+            $('.share-btn').popup('hide')
+          }, 500)
+        })
       }
     },
     methods: {
@@ -132,6 +149,9 @@
           router.replace('/404')
         }
       })
+    },
+    ready: function () {
+      this.$emit('share')
     }
   }
 </script>
