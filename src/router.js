@@ -51,6 +51,7 @@ router.map({
     component: tips
   },
   'tips/:id': {
+    name: 'tipsDetail',
     component: tipsDetail
   },
   'group': {

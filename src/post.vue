@@ -2,63 +2,64 @@
   <div class="ui container">
     <div class="ui basic buttons">
       <button class="ui icon button" @click="viewCtrl">
-        <i class="exchange icon"></i>
+        <i class="unhide icon"></i>
       </button>
     </div>
-    <div class="ui internally celled grid" :class="{two: layout == 2, column: layout == 2}" id="postMain">
-      <div class="column">
-        <textarea id="post" v-model="content"></textarea>
-      </div>
-      <div class="column" v-if="layout == 2">
-        <div class="markdown-body" v-html="content | marked">
-
+    <div class="ui divided grid" id="postMain">
+      <div class="row">
+        <div class="column">
+          <div class="ui form">
+            <div class="field">
+              <label>标题：</label>
+              <input type="text" v-model="title">
+            </div>
+            <div class="field" v-if="isAdmin">
+              <input type="text" v-model="semantic" placeholder="语义化url">
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="ui button">
-      发布
+      <div class="row" :class="{two: layout == 2, column: layout == 2}">
+        <div class="column">
+          <textarea class="lfg-editor" v-model="content" placeholder="..."></textarea>
+        </div>
+        <div class="column" v-if="layout == 2">
+          <div class="markdown-body post-view" v-html="content | marked">
+
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="column">
+          <div class="field">
+            <div class="ui button" :class="{disabled: !allow}" @click="submit">
+              发布
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 <style lang="less">
-  #post {
-    width: 100%;
-    max-width: 100%;
-    min-height: 5 * 14 * 1.45 + 20px;
-    max-height: none;
-    padding: 10px;
-    border: none;
-    resize: none;
-    background-color: #F5F5F0;
-    box-shadow: 0px 3px 15px 2px #F5F5F0;
-    border-bottom: 1px dashed #ccc;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 14px;
-    color: #333332;
-    line-height: 1.45;
-    &:focus {
-      outline: none;
-      box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.42);
-    }
+  #postMain {
+    margin-top: 10px;
+  }
+  .post-view {
+    max-height: 40em;
+    overflow: auto;
   }
 </style>
 <script>
-function debounce (callback, delay) {
-  var timer = null
-  return function () {
-    var context = this
-    var args = arguments
-    clearTimeout(timer)
-    timer = setTimeout(function () {
-      callback.apply(context, args)
-    }, delay)
-  }
-}
+import Editor from './mixins/editor'
+import ref from './ref'
 export default {
   data: function () {
     return {
       layout: 1,
-      content: ''
+      content: '',
+      title: '',
+      semantic: ''
     }
   },
   filters: {
@@ -67,24 +68,30 @@ export default {
   events: {
     resizile: function () {
       this.$nextTick(function () {
-        var textarea = $('#post')
-        textarea.css({
-          height: 'auto'
-        })
-        textarea.innerHeight(textarea[0].scrollHeight)
+        Editor({
+          target: $('.lfg-editor')
+        }).responsive()
       })
     }
   },
+  computed: {
+    allow: function () {
+      return !!this.content
+    },
+    isAdmin: function () {
+      return this.$root.user.admin
+    }
+  },
   ready: function () {
-    var self = this
-    var textarea = $('#post')
-    textarea.on('input change', function () {
-      self.$emit('resizile')
+    Editor({
+      target: $('.lfg-editor')
+    }).init()
+    $('.lfg-editor').on('scroll', function () {
+      var scale = $(this).scrollTop() / $(this)[0].scrollHeight
+      var rt = $('.post-view')
+      var rt_height = rt[0].scrollHeight
+      rt.scrollTop(scale * rt_height)
     })
-    var resize = debounce(function () {
-      self.$emit('resizile')
-    }, 250)
-    $(window).on('resize', resize)
   },
   methods: {
     viewCtrl: function () {
@@ -95,6 +102,24 @@ export default {
         this.layout = 1
       }
       self.$emit('resizile')
+    },
+    submit: function () {
+      var self = this
+      var admin = this.isAdmin
+      var data = {
+        content: this.content,
+        author: this.$root.user.uid,
+        audit: admin,
+        title: this.title
+      }
+      if (admin) {
+        data.semantic = this.semantic
+      }
+      ref.child('tips').push(data, function () {
+        self.content = ''
+        self.semantic = ''
+        self.$emit('resizile')
+      })
     }
   }
 }
