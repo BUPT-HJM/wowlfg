@@ -94,8 +94,7 @@
   import auth from './helper/auth'
   import router from './router'
   import ref from './ref'
-  import {activity} from './data'
-  import {version} from './data'
+  import {activity, version} from './data'
   var origin = {
     title: '',
     date: '',

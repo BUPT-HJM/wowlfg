@@ -31,7 +31,7 @@
       z-index: 1;
       top: 0;
       left: 0;
-      background: url('./static/images/wow-mounts-1.jpg') 50% no-repeat;
+      background: url('./assets/wow-mounts.jpg') 50% no-repeat;
       background-size: cover;
       .mask {
         width: 100%;

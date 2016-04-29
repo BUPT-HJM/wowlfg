@@ -5,7 +5,8 @@ function responsibility (value) {
   return result[value - 1]
 }
 
-import {profession} from './data'
+import {profession, activity, class_data, version} from './data'
+
 function professionFilter (value) {
   var array = profession.concat()
   if (Array.isArray(value)) {
@@ -16,7 +17,6 @@ function professionFilter (value) {
   }
 }
 
-import {activity} from './data'
 function activityType (value) {
   return activity[value]
 }
@@ -37,7 +37,6 @@ function contactType (value) {
   return result
 }
 
-import {class_data} from './data'
 function get_class (value) {
   var class_array = class_data.map(function (currentValue) {
     return currentValue.name
@@ -56,7 +55,6 @@ function date (value) {
   return date.getFullYear() + '.' + leftpad(date.getMonth() + 1) + '.' + leftpad(date.getDate())
 }
 
-import {version} from './data'
 function get_version (value) {
   for (var i = 0; i < version.length; i++) {
     if (value === version[i].type) {

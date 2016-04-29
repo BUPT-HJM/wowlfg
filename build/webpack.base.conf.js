@@ -1,21 +1,24 @@
-var webpack = require('webpack')
 var path = require('path')
-var cssLoaders = require('./css-loaders')
+var config = require('../config')
+var utils = require('./utils')
 var projectRoot = path.resolve(__dirname, '../')
+
 module.exports = {
   entry: {
     app: './src/main.js'
   },
   output: {
-    path: path.resolve(__dirname, '../dist/static'),
-    publicPath: './static/',
+    path: config.build.assetsRoot,
+    publicPath: config.build.assetsPublicPath,
     filename: '[name].js'
   },
   resolve: {
     extensions: ['', '.js', '.vue'],
     fallback: [path.join(__dirname, '../node_modules')],
     alias: {
-      'src': path.resolve(__dirname, '../src')
+      'src': path.resolve(__dirname, '../src'),
+      'assets': path.resolve(__dirname, '../src/assets'),
+      'components': path.resolve(__dirname, '../src/components')
     }
   },
   resolveLoader: {
@@ -56,23 +59,27 @@ module.exports = {
         loader: 'vue-html'
       },
       {
-        test: /\.(png|jpg|gif|svg|woff2?|eot|ttf)(\?.*)?$/,
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url',
         query: {
           limit: 10000,
-          name: '[name].[ext]?[hash:7]'
+          name: utils.assetsPath('img/[name].[hash:7].[ext]')
         }
       },
       {
-        test: /\.less$/,
-        loader: "style!css!less"
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        loader: 'url',
+        query: {
+          limit: 10000,
+          name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+        }
       }
     ]
   },
-  vue: {
-    loaders: cssLoaders()
-  },
   eslint: {
     formatter: require('eslint-friendly-formatter')
+  },
+  vue: {
+    loaders: utils.cssLoaders()
   }
 }
