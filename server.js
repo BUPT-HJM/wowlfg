@@ -4,7 +4,13 @@ var app = express();
 app.use('/static', express.static(__dirname + '/dist/static'));
 
 app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname + '/dist/index.html'));
+  var haswww = req.headers.host.match(/^www\./);
+  var url = req.protocol + '://' + req.get('host').replace(/www\./, '') + req.originalUrl;
+  if (haswww) {
+    res.redirect(301, url);
+  } else {
+    res.sendFile(path.join(__dirname + '/dist/index.html'));
+  }
 });
 
 app.listen(80, function () {
