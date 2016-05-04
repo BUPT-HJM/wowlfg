@@ -8,6 +8,8 @@
       <a class="item" v-link="{ path: '/group' }">组队</a>
       <a class="item" v-link="{ path: '/recruit-a-friend' }">招募</a>
       <a class="item" v-link="{ path: '/tips' }">经验</a>
+      <a class="item" v-link="{ path: '/favor' }">收藏夹</a>
+      <a class="item" v-link="{ path: '/qgroup' }">成就群</a>
       <a class="item" v-link="{ path: '/titans' }">Titans</a>
       <div class="right menu">
         <a class="item" v-link="{ path: '/account' }" v-if="!auth">登入</a>
