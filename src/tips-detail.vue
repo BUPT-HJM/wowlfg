@@ -136,12 +136,14 @@
     created: function () {
       var id = this.$route.params.id
       var self = this
-      ref.child('tips').child(id).on('value', function (snapshot) {
-        var val = snapshot.val()
-        if (val) {
-          self.content = val.content
-          self.author = val.author
-          self.title = val.title
+      var xhr = $.ajax({
+        url: '/api/tips/' + id
+      })
+      xhr.done(function (data) {
+        if (data.status !== 'error') {
+          self.content = data.content
+          self.author = data.author
+          self.title = data.title
           self.$nextTick(function () {
             self.$emit('replacement')
           })
