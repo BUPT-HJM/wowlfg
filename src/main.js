@@ -33,6 +33,10 @@ var app = Vue.extend({
           }
         })
       })
+    } else {
+      $.removeCookie('uid', {path: '/'})
+      $.removeCookie('access_token', {path: '/'})
+      $.removeCookie('screenname', {path: '/'})
     }
   },
   components: {

@@ -40,7 +40,6 @@
   }
 </style>
 <script>
-  require('./less/markdown.less')
   import router from './router'
   import ref from './ref'
   import Editor from './mixins/editor'

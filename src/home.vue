@@ -20,24 +20,21 @@
 </template>
 
 <style lang="less">
-html {
-  height: 100%;
-}
-
-body {
-  padding-top: 75px;
-}
-
 .intro {
   text-align: center;
 }
 
 .logo {
   width: 100px;
-  height: 100px
+  height: 100px;
 }
 
 #homeFeature {
   display: none;
 }
 </style>
+
+<script>
+require('./less/markdown.less')
+require('./less/main.less')
+</script>

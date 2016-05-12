@@ -207,7 +207,7 @@
       }
     },
     created: function () {
-      _id = '-' + this.$route.params.id
+      _id = this.$route.params.id
       _$titans = ref.child('titans').child(_id)
     },
     ready: function () {

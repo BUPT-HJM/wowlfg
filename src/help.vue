@@ -9,6 +9,12 @@
         </div>
       </div>
       <div class="item">
+        <i class="qq icon"></i>
+        <div class="content">
+          QQ群 151475260
+        </div>
+      </div>
+      <div class="item">
         <i class="github icon"></i>
         <div class="content">
           <a href="https://github.com/KennyWho/wowlfg">Github源码</a>

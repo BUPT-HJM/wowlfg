@@ -14,7 +14,7 @@
             <div class="field">
               <label>密码</label>
               <div class="ui left icon input">
-                <input type="password" v-model="loginInfo.password">
+                <input type="password" v-model="loginInfo.password" @keyup.enter="login">
                 <i class="lock icon"></i>
               </div>
             </div>
@@ -22,13 +22,13 @@
               <p v-if="loginInfo.error.email">邮箱格式不正确</p>
               <p v-if="loginInfo.query.status == 2"></p>
             </div>
-            <div class="ui blue submit button" :class="{disabled: loginError}" @click="login">登入</div>
+            <button class="ui blue submit button" :class="{disabled: loginError}" @click="login">登入</button>
             <div class="ui submit button" @click="switchForgot">忘记密码</div>
           </div>
         </div>
         <div class="ui vertical divider">Or </div>
         <div class="center aligned column">
-          <div class="ui big green labeled icon button" @click="registerEntry"><i class="signup icon"></i> 注册 </div>
+          <button class="ui big green labeled icon button" @click="registerEntry"><i class="signup icon"></i> 注册 </button>
         </div>
       </div>
       <!-- 注册 -->
