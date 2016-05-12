@@ -39,6 +39,9 @@ var app = Vue.extend({
       $.removeCookie('screenname', {path: '/'})
     }
   },
+  ready: function () {
+    FastClick.attach(document.body)
+  },
   components: {
     navigator: header
   },

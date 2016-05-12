@@ -11,7 +11,8 @@ module.exports = {
     'Wilddog': true,
     'VueAsyncData': true,
     'Clipboard': true,
-    'marked': true
+    'marked': true,
+    'FastClick': true
   },
   // add your custom rules here
   'rules': {
