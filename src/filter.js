@@ -64,6 +64,13 @@ function get_version (value) {
   return null
 }
 
+Vue.filter('faction', function (value) {
+  return (function () {
+    var result = ['联盟', '部落', '双阵营']
+    return result[value]
+  })()
+})
+
 Vue.filter('responsibility', function (value) {
   return responsibility(value)
 })

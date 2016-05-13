@@ -5,7 +5,7 @@
     <a class="item" v-link="{ path: '/recruit-a-friend' }">招募</a>
     <a class="item" v-link="{ path: '/tips' }">经验</a>
     <a class="item" v-link="{ path: '/favor' }">收藏夹</a>
-    <a class="item" v-link="{ path: '/qgroup' }">成就群</a>
+    <a class="item" v-link="{ path: '/qqGroup' }">群组</a>
     <a class="item" v-link="{ path: '/titans' }">Titans</a>
   </div>
   <div id="mobile-menu" class="ui top fixed menu">
@@ -13,7 +13,7 @@
       <a class="launch icon item" @click="sidebar">
         <i class="content icon"></i>
       </a>
-      
+
       <div class="right menu">
         <a class="item" v-link="{ path: '/account' }" v-if="!auth">登入</a>
         <a class="item" v-link="{ name: 'user', params: { uid: user.uid }}" v-else>
@@ -36,7 +36,7 @@
       <a class="item" v-link="{ path: '/recruit-a-friend' }">招募</a>
       <a class="item" v-link="{ path: '/tips' }">经验</a>
       <a class="item" v-link="{ path: '/favor' }">收藏夹</a>
-      <a class="item" v-link="{ path: '/qgroup' }">成就群</a>
+      <a class="item" v-link="{ path: '/qqGroup' }">群组</a>
       <a class="item" v-link="{ path: '/titans' }">Titans</a>
       <div class="right menu">
         <a class="item" v-link="{ path: '/account' }" v-if="!auth">登入</a>

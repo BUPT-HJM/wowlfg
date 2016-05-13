@@ -14,6 +14,7 @@ import titans from './titans'
 import titansDetail from './titans-detail'
 import titansHelper from './titans-helper'
 import titansGroup from './titans-group'
+import qqGroup from './qq-group'
 import post from './post'
 import help from './help'
 import notFound from './404'
@@ -74,6 +75,9 @@ router.map({
   },
   'post': {
     component: post
+  },
+  'qqGroup': {
+    component: qqGroup
   },
   'help': {
     component: help
