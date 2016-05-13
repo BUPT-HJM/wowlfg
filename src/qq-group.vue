@@ -100,7 +100,7 @@
   export default {
     data: function () {
       return {
-        form: Object.assign({}, init),
+        form: $.extend(true, {}, init),
         list: []
       }
     },
@@ -150,7 +150,7 @@
           data.code = ''
         }
         ref.child('qqgroup').push(data, function () {
-          self.form = Object.assign({}, init)
+          self.form = $.extend(true, {}, init)
           $('.qqGroup-modal').modal('hide')
         })
       }

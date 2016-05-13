@@ -33,7 +33,6 @@ export default {
     }
   },
   asyncData: function (resolve, reject) {
-    console.log(this.$root.user.uid)
     var uid = this.$root.user.uid
     ref.child('users/' + uid).on('value', function (snapshot) {
       var val = snapshot.val()

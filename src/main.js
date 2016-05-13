@@ -15,7 +15,7 @@ var init = {
 
 var app = Vue.extend({
   data: function () {
-    return Object.assign({}, init)
+    return $.extend(true, {}, init)
   },
   created: function () {
     var token = $.cookie('access_token')
@@ -56,7 +56,7 @@ var app = Vue.extend({
       this.$emit('getUserInfo', id)
     },
     'user:logout': function () {
-      this.$data = Object.assign({}, init)
+      this.$data = $.extend(true, {}, init)
       $.removeCookie('uid', {path: '/'})
       $.removeCookie('access_token', {path: '/'})
       $.removeCookie('screenname', {path: '/'})
