@@ -13,10 +13,6 @@
         <input type="text" v-model="battleID" v-show="edit">
       </div>
     </div>
-    <div class="field">
-      <label>邮箱</label>
-      <p>{{email}}</p>
-    </div>
     <button class="ui button" type="submit" :class="{green: edit}" @click="save">
       <span v-if="!edit">修改</span>
       <span v-else>保存</span>
@@ -30,7 +26,6 @@ import router from './router'
 export default {
   data: function () {
     return {
-      email: '',
       battleID: '',
       username: '',
       edit: false,
@@ -38,6 +33,7 @@ export default {
     }
   },
   asyncData: function (resolve, reject) {
+    console.log(this.$root.user.uid)
     var uid = this.$root.user.uid
     ref.child('users/' + uid).on('value', function (snapshot) {
       var val = snapshot.val()
@@ -51,9 +47,6 @@ export default {
     var token = $.cookie('access_token')
     if (!token || !auth || token !== auth.token) {
       router.replace('/')
-    }
-    if (auth) {
-      this.email = auth.password.email
     }
     this.$emit('nameChanged')
   },

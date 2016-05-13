@@ -44,9 +44,7 @@
       logout: function () {
         this.$root.islogin = false
         this.$root.user.uid = ''
-        $.removeCookie('access_token', {path: '/'})
-        $.removeCookie('uid', {path: '/'})
-        $.removeCookie('screenname', {path: '/'})
+        this.$dispatch('user:logout')
         ref.unauth()
         router.replace('/')
       }

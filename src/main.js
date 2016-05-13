@@ -4,39 +4,43 @@ import ref from './ref'
 import auth from './helper/auth'
 import './filter'
 
+var init = {
+  islogin: false,
+  user: {
+    uid: '',
+    screenname: '',
+    admin: false
+  }
+}
+
 var app = Vue.extend({
   data: function () {
-    return {
-      islogin: false,
-      user: {
-        uid: '',
-        screenname: '',
-        admin: false
-      }
-    }
+    return Object.assign({}, init)
   },
   created: function () {
     var token = $.cookie('access_token')
     var id = $.cookie('uid')
     var self = this
-    if (token) {
-      auth.done(function () {
-        self.$emit('user:login', id)
-      }).fail(function () {
+    if (token && id) {
+      // token认证
+      var tokenLogin = function () {
         ref.authWithCustomToken(token, function (error, authData) {
           if (error) {
-            $.removeCookie('uid', {path: '/'})
-            $.removeCookie('access_token', {path: '/'})
-            $.removeCookie('screenname', {path: '/'})
+            // 验证失败
+            self.$emit('user:logout')
           } else {
             self.$emit('user:login', id)
           }
         })
+      }
+      auth.done(function () {
+        self.$emit('user:login', id)
+      })
+      auth.fail(function () {
+        tokenLogin()
       })
     } else {
-      $.removeCookie('uid', {path: '/'})
-      $.removeCookie('access_token', {path: '/'})
-      $.removeCookie('screenname', {path: '/'})
+      self.$emit('user:logout')
     }
   },
   ready: function () {
@@ -50,6 +54,12 @@ var app = Vue.extend({
       this.islogin = true
       this.user.uid = id
       this.$emit('getUserInfo', id)
+    },
+    'user:logout': function () {
+      this.$data = Object.assign({}, init)
+      $.removeCookie('uid', {path: '/'})
+      $.removeCookie('access_token', {path: '/'})
+      $.removeCookie('screenname', {path: '/'})
     },
     'getUserInfo': function (id) {
       var self = this
