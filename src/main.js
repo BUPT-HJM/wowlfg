@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import header from './components/header'
 import ref from './ref'
-import auth from './helper/auth'
 import './filter'
 
 var init = {
@@ -33,12 +32,12 @@ var app = Vue.extend({
           }
         })
       }
-      auth.done(function () {
+      var auth = ref.getAuth()
+      if (auth) {
         self.$emit('user:login', id)
-      })
-      auth.fail(function () {
+      } else {
         tokenLogin()
-      })
+      }
     } else {
       self.$emit('user:logout')
     }
@@ -74,6 +73,7 @@ var app = Vue.extend({
             self.user.screenname = val.username
           }
           if (val.admin) {
+            // 验证身份
             self.user.admin = true
           }
         }

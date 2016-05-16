@@ -16,7 +16,7 @@
 
       <div class="right menu">
         <a class="item" v-link="{ path: '/account' }" v-if="!auth">登入</a>
-        <a class="item" v-link="{ name: 'user', params: { uid: user.uid }}" v-else>
+        <a class="item user-info" v-link="{ name: 'user', params: { uid: user.uid }, exact: true}" v-else>
           <span v-if="!user.screenname">{{user.uid}}</span>
           <span v-else>{{user.screenname}}</span>
           <div class="ui teal label" v-if="user.admin">
@@ -40,7 +40,7 @@
       <a class="item" v-link="{ path: '/titans' }">Titans</a>
       <div class="right menu">
         <a class="item" v-link="{ path: '/account' }" v-if="!auth">登入</a>
-        <a class="item" v-link="{ name: 'user', params: { uid: user.uid }}" v-else>
+        <a class="item" v-link="{ name: 'user', params: { uid: user.uid }, exact: true}" v-else>
           <span v-if="!user.screenname">{{user.uid}}</span>
           <span v-else>{{user.screenname}}</span>
           <div class="ui teal label" v-if="user.admin">

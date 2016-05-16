@@ -91,7 +91,6 @@
   }
 </style>
 <script>
-  import auth from './helper/auth'
   import router from './router'
   import ref from './ref'
   import {activity, version} from './data'
@@ -117,11 +116,6 @@
   export default {
     data: function () {
       return jsonClone(origin)
-    },
-    created: function () {
-      auth.fail(function () {
-        router.go('/account')
-      })
     },
     computed: {
       allow: function () {

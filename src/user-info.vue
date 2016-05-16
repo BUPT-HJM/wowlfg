@@ -1,5 +1,5 @@
 <template>
-  <h3>账号信息 </h3>
+  <h3 class="ui header">账号信息 </h3>
   <div class="ui form">
     <div class="two fields">
       <div class="field">
@@ -18,6 +18,19 @@
       <span v-else>保存</span>
     </button>
     <button class="ui button" type="submit" v-show="edit" @click="cancel">取消</button>
+  </div>
+  <div class="ui divider"></div>
+  <h3 class="ui header">积分奖励</h3>
+  <div class="ui statistic">
+    <div class="value">
+      5
+    </div>
+    <div class="label">
+      积分
+    </div>
+  </div>
+  <div class="">
+    <button type="button" class="ui button basic" name="button"><i class="trophy icon"></i> 积分兑换</button>
   </div>
 </template>
 <script>

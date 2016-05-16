@@ -87,7 +87,6 @@
 </style>
 
 <script>
-  import auth from './helper/auth'
   import router from './router'
   import ref from './ref'
   var init = {
@@ -122,16 +121,17 @@
     methods: {
       modalCtrl: function () {
         var self = this
-        auth.done(function () {
+        var auth = ref.getAuth()
+        if (auth) {
           $('.qqGroup-modal').modal({
             onApprove: function () {
               self.$emit('submit')
               return false
             }
           }).modal('show')
-        }).fail(function () {
+        } else {
           router.go('/account')
-        })
+        }
       }
     },
     events: {

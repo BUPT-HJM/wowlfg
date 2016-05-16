@@ -18,7 +18,7 @@ import qqGroup from './qq-group'
 import post from './post'
 import help from './help'
 import notFound from './404'
-
+import ref from './ref'
 Vue.use(VueRouter)
 Vue.use(VueAsyncData)
 var router = new VueRouter({
@@ -39,7 +39,8 @@ router.map({
     name: 'user',
     component: user,
     subRoutes: {
-      '/': {
+      '/info': {
+        name: 'userInfo',
         component: userInfo
       },
       'posts': {
@@ -59,7 +60,8 @@ router.map({
     component: group
   },
   'create-group': {
-    component: groupForm
+    component: groupForm,
+    auth: true
   },
   'titans': {
     component: titans
@@ -89,7 +91,22 @@ router.map({
 
 router.redirect({
   '/': '/index',
+  '/user/:uid': '/user/:uid/info',
   '*': '/404'
+})
+
+router.beforeEach(function (transition) {
+  if (transition.to.auth) {
+    var auth = ref.getAuth()
+    if (auth) {
+      transition.next()
+    } else {
+      transition.abort()
+      router.go('/account')
+    }
+  } else {
+    transition.next()
+  }
 })
 
 export default router

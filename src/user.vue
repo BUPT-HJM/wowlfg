@@ -2,10 +2,13 @@
   <div class="ui grid stackable container">
     <div class="four wide column">
       <div class="ui vertical menu user-menu">
-        <a class="item">
-          组队
+        <a class="item" v-link="{ name: 'userInfo', params: { uid: userId }}">
+          用户中心
         </a>
-        <a class="item" v-link="{ name: 'post', params: { uid: userId }}">
+        <!-- <a class="item">
+          组队
+        </a> -->
+        <a class="item" v-link="{ name: 'post', params: { uid: userId }}" v-if="master">
           文章
         </a>
         <a class="item" @click="logout">
@@ -36,6 +39,9 @@
   import router from './router'
   export default {
     computed: {
+      master: function () {
+        return this.$root.user.admin
+      },
       userId: function () {
         return this.$root.user.uid
       }
