@@ -64,6 +64,9 @@ var version = [{
   type: 100,
   val: '德拉诺之王'
 }]
+
+var region = ['一区', '二区', '三区', '五区', '十区']
+
 export {
   class_data
 }
@@ -75,4 +78,7 @@ export {
 }
 export {
   version
+}
+export {
+  region
 }

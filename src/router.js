@@ -16,6 +16,10 @@ import titansHelper from './titans-helper'
 import titansGroup from './titans-group'
 import qqGroup from './qq-group'
 import post from './post'
+import order from './order'
+import orderManager from './order-manager'
+import orderCreate from './order-create'
+import orderList from './order-list'
 import help from './help'
 import notFound from './404'
 import ref from './ref'
@@ -80,6 +84,20 @@ router.map({
   },
   'qqGroup': {
     component: qqGroup
+  },
+  'order': {
+    component: order
+  },
+  'order/manager': {
+    component: orderManager,
+    subRoutes: {
+      '/': {
+        component: orderList
+      },
+      '/add': {
+        component: orderCreate
+      }
+    }
   },
   'help': {
     component: help

@@ -4,13 +4,13 @@
     <div class="two fields">
       <div class="field">
         <label>用户名</label>
-        <p v-show="username && !edit">{{username}}</p>
-        <input type="text" v-model="username" v-show="edit">
+        <p v-show="info.username && !edit">{{info.username}}</p>
+        <input type="text" v-model="info.username" v-show="edit">
       </div>
       <div class="field">
         <label>战网ID</label>
-        <p v-show="battleID && !edit">{{battleID}}</p>
-        <input type="text" v-model="battleID" v-show="edit">
+        <p v-show="info.battleID && !edit">{{info.battleID}}</p>
+        <input type="text" v-model="info.battleID" v-show="edit">
       </div>
     </div>
     <button class="ui button" type="submit" :class="{green: edit}" @click="save">
@@ -39,10 +39,13 @@ import router from './router'
 export default {
   data: function () {
     return {
-      battleID: '',
-      username: '',
+      info: {
+        battleID: '',
+        username: ''
+      },
       edit: false,
-      admin: false
+      admin: false,
+      permission: 0
     }
   },
   asyncData: function (resolve, reject) {
@@ -60,29 +63,21 @@ export default {
     if (!token || !auth || token !== auth.token) {
       router.replace('/')
     }
-    this.$emit('nameChanged')
-  },
-  events: {
-    'nameChanged': function () {
-      var self = this
-      var uid = this.$root.uid
-      ref.child('users/' + uid + '/username').on('value', function (snapshot) {
-        var val = snapshot.val()
-        if (val) {
-          self.$root.screenname = val
-          $.cookie('screenname', val, { expires: 7, path: '/' })
-        }
-      })
-    }
   },
   methods: {
     save: function () {
       var self = this
       if (self.edit) {
         var uid = self.$root.user.uid
-        ref.child('users/' + uid).set({
-          username: self.username,
-          battleID: self.battleID
+        ref.child('users/' + uid + '/info').set({
+          username: self.info.username,
+          battleID: self.info.battleID
+        }, function (err) {
+          if (!err) {
+            var username = self.info.username
+            self.$root.screenname = username
+            $.cookie('screenname', username, { expires: 7, path: '/' })
+          }
         })
       }
       this.edit = !this.edit

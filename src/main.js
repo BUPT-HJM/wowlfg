@@ -8,7 +8,8 @@ var init = {
   user: {
     uid: '',
     screenname: '',
-    admin: false
+    admin: false,
+    permission: 0
   }
 }
 
@@ -66,15 +67,17 @@ var app = Vue.extend({
         var val = snapshot.val()
         var screenname = $.cookie('screenname')
         if (val) {
-          if (val.username) {
+          if (val.info && val.info.username) {
             if (!screenname) {
-              $.cookie('screenname', val.username, { expires: 7, path: '/' })
+              $.cookie('screenname', val.info.username, { expires: 7, path: '/' })
             }
-            self.user.screenname = val.username
+            self.user.screenname = val.info.username
           }
           if (val.admin) {
-            // 验证身份
             self.user.admin = true
+          }
+          if (val.permission) {
+            self.user.permission = val.permission
           }
         }
       })
