@@ -17,12 +17,14 @@
         <div class="extra content">
           <span v-order-status="item.status"></span>
         </div>
+        <a class="ui bottom attached button" v-link="{ name: 'orderDetail', params: {id: item.number} }"><i class="tasks icon"></i> 详情</a>
       </div>
     </div>
   </div>
 </template>
 <script>
   import ref from './ref'
+  import {orderStatus} from './data'
   export default {
     data: function () {
       return {
@@ -35,24 +37,7 @@
     directives: {
       'order-status': {
         update: function (value) {
-          var data = [
-            {
-              icon: 'feed',
-              text: '派单中'
-            },
-            {
-              icon: 'wait',
-              text: '已接单'
-            },
-            {
-              icon: 'find',
-              text: '待验收'
-            },
-            {
-              icon: 'checkered flag',
-              text: '完成'
-            }
-          ]
+          var data = orderStatus
           this.el.innerHTML = '<i class="' + data[value].icon + ' icon"></i>' + data[value].text
         }
       }

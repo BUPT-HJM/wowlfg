@@ -5,7 +5,7 @@ function responsibility (value) {
   return result[value - 1]
 }
 
-import {profession, activity, class_data, version, region} from './data'
+import {profession, activity, class_data, version, region, orderStatus} from './data'
 
 function professionFilter (value) {
   var array = profession.concat()
@@ -103,5 +103,16 @@ Vue.filter('region', function (value) {
   return (function () {
     var result = region
     return result[value]
+  })()
+})
+
+Vue.filter('orderStatus', function (value) {
+  return (function () {
+    var result = orderStatus
+    if (result[value]) {
+      return result[value].text
+    } else {
+      return ''
+    }
   })()
 })

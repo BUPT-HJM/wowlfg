@@ -1,28 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import home from './home'
-import recruit from './recruit'
-import account from './account'
-import user from './user'
-import userInfo from './user-info'
-import userPost from './user-post'
-import tips from './tips'
-import tipsDetail from './tips-detail'
-import group from './group'
-import groupForm from './group-form'
-import titans from './titans'
-import titansDetail from './titans-detail'
-import titansHelper from './titans-helper'
-import titansGroup from './titans-group'
-import qqGroup from './qq-group'
-import post from './post'
-import order from './order'
-import orderManager from './order-manager'
-import orderCreate from './order-create'
-import orderList from './order-list'
-import help from './help'
-import notFound from './404'
 import ref from './ref'
+
 Vue.use(VueRouter)
 Vue.use(VueAsyncData)
 var router = new VueRouter({
@@ -31,96 +10,156 @@ var router = new VueRouter({
 
 router.map({
   'index': {
-    component: home
+    component: function (resolve) {
+      require(['./home'], resolve)
+    }
   },
   'recruit-a-friend': {
-    component: recruit
+    component: function (resolve) {
+      require(['./recruit'], resolve)
+    }
   },
   'account': {
-    component: account
+    component: function (resolve) {
+      require(['./account'], resolve)
+    }
   },
   'user/:uid': {
     name: 'user',
-    component: user,
+    component: function (resolve) {
+      require(['./user'], resolve)
+    },
     subRoutes: {
       '/info': {
         name: 'userInfo',
-        component: userInfo
+        component: function (resolve) {
+          require(['./user-info'], resolve)
+        }
       },
       'posts': {
         name: 'post',
-        component: userPost
+        component: function (resolve) {
+          require(['./user-post'], resolve)
+        }
       }
     }
   },
   'tips': {
-    component: tips
+    component: function (resolve) {
+      require(['./tips'], resolve)
+    }
   },
   'tips/:id': {
     name: 'tipsDetail',
-    component: tipsDetail
+    component: function (resolve) {
+      require(['./tips-detail'], resolve)
+    }
   },
   'group': {
-    component: group
+    component: function (resolve) {
+      require(['./group'], resolve)
+    }
   },
   'create-group': {
-    component: groupForm,
-    auth: true
+    auth: true,
+    component: function (resolve) {
+      require(['./group-form'], resolve)
+    }
   },
   'titans': {
-    component: titans
+    component: function (resolve) {
+      require(['./titans'], resolve)
+    }
   },
   'titans/:id': {
-    component: titansDetail
+    component: function (resolve) {
+      require(['./titans-detail'], resolve)
+    }
   },
   'titans-helper': {
-    component: titansHelper
+    component: function (resolve) {
+      require(['./titans-helper'], resolve)
+    }
   },
   'titans-group': {
-    component: titansGroup
+    component: function (resolve) {
+      require(['./titans-group'], resolve)
+    }
   },
   'post': {
-    component: post
+    component: function (resolve) {
+      require(['./post'], resolve)
+    }
   },
   'qqGroup': {
-    component: qqGroup
+    component: function (resolve) {
+      require(['./qq-group'], resolve)
+    }
   },
   'order': {
-    component: order
+    component: function (resolve) {
+      require(['./order'], resolve)
+    }
+  },
+  'order/:id': {
+    name: 'orderDetail',
+    component: function (resolve) {
+      require(['./order-detail'], resolve)
+    }
   },
   'order/manager': {
-    component: orderManager,
+    component: function (resolve) {
+      require(['./order-manager'], resolve)
+    },
+    permission: true,
     subRoutes: {
-      '/': {
-        component: orderList
+      '/list': {
+        component: function (resolve) {
+          require(['./order-list'], resolve)
+        }
       },
       '/add': {
-        component: orderCreate
+        component: function (resolve) {
+          require(['./order-create'], resolve)
+        }
       }
     }
   },
   'help': {
-    component: help
+    component: function (resolve) {
+      require(['./help'], resolve)
+    }
   },
   '404': {
-    component: notFound
+    component: function (resolve) {
+      require(['./404'], resolve)
+    }
   }
 })
 
 router.redirect({
   '/': '/index',
   '/user/:uid': '/user/:uid/info',
+  '/order/manager': '/order/manager/list',
   '*': '/404'
 })
 
 router.beforeEach(function (transition) {
+  // 登陆权限
   if (transition.to.auth) {
     var auth = ref.getAuth()
-    if (auth) {
+    if (!auth) {
+      transition.abort()
+      router.go('/account')
+    } else {
+      transition.next()
+    }
+  } else if (transition.to.permission) {
+    var permission = window.sessionStorage.getItem('permission')
+    if (permission && permission <= 3) {
       transition.next()
     } else {
       transition.abort()
-      router.go('/account')
     }
   } else {
     transition.next()

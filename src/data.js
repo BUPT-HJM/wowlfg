@@ -67,6 +67,25 @@ var version = [{
 
 var region = ['一区', '二区', '三区', '五区', '十区']
 
+var orderStatus = [
+  {
+    icon: 'feed',
+    text: '派单中'
+  },
+  {
+    icon: 'wait',
+    text: '已接单'
+  },
+  {
+    icon: 'find',
+    text: '待验收'
+  },
+  {
+    icon: 'checkered flag',
+    text: '完成'
+  }
+]
+
 export {
   class_data
 }
@@ -81,4 +100,7 @@ export {
 }
 export {
   region
+}
+export {
+  orderStatus
 }

@@ -78,6 +78,7 @@ var app = Vue.extend({
           }
           if (val.permission) {
             self.user.permission = val.permission
+            window.sessionStorage.setItem('permission', val.permission)
           }
         }
       })
