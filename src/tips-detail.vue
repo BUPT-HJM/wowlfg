@@ -7,9 +7,9 @@
           <button class="ui button" @click="edit" v-if="myself"><i class="edit icon"></i></button>
         </div>
       </div>
-      <div class="markdown-main">
+      <div class="markdown-main" v-show="!editable">
         <div class="ui active loader"></div>
-        <div v-html="content | marked" v-show="!editable"></div>
+        <div v-html="content | marked"></div>
       </div>
       <div class="ui form tips-detail-edit" v-if="editable && myself">
         <div class="field">

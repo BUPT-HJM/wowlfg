@@ -8,7 +8,6 @@ router.get('/tips/:id', function(req, res, next) {
   var _id = req.params.id
   ref.child('tips').child(_id).once('value', function (snapshot) {
     var val = snapshot.val()
-    console.log(val)
     if (val) {
       res.send(val)
     } else {
@@ -16,6 +15,7 @@ router.get('/tips/:id', function(req, res, next) {
         status: 'error'
       })
     }
+    req.socket.end()
   })
 })
 
