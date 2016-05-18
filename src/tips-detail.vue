@@ -2,12 +2,15 @@
   <div class="ui container text">
     <div class="markdown-body">
       <div class="tips-detail-toolbar">
-        <div class="ui small basic icon buttons">
+        <div class="ui small basic icon buttons right floated">
           <button class="ui button share-btn" data-content="复制成功" data-position="top left"><i class="share icon"></i></button>
           <button class="ui button" @click="edit" v-if="myself"><i class="edit icon"></i></button>
         </div>
       </div>
-      <div v-html="content | marked" v-show="!editable"></div>
+      <div class="markdown-main">
+        <div class="ui active loader"></div>
+        <div v-html="content | marked" v-show="!editable"></div>
+      </div>
       <div class="ui form tips-detail-edit" v-if="editable && myself">
         <div class="field">
           <label>标题：</label>
@@ -29,14 +32,17 @@
   .tips-detail-edit {
     padding-top: 30px;
   }
-  .markdown-body {
-    position: relative;
-  }
   .tips-detail-toolbar {
-    position: absolute;
-    z-index: 10;
-    right: 10px;
-    top: 10px;
+    margin-bottom: 20px;
+    &:after {
+      content: '';
+      display: table;
+      clear: both;
+    }
+  }
+  .markdown-main {
+    position: relative;
+    min-height: 300px;
   }
 </style>
 <script>
@@ -140,6 +146,7 @@
       })
       xhr.done(function (data) {
         if (data.status !== 'error') {
+          $('.loader').removeClass('active')
           self.content = data.content
           self.author = data.author
           self.title = data.title

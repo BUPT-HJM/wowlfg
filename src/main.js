@@ -59,26 +59,25 @@ var app = Vue.extend({
       this.$data = $.extend(true, {}, init)
       $.removeCookie('uid', {path: '/'})
       $.removeCookie('access_token', {path: '/'})
-      $.removeCookie('screenname', {path: '/'})
+      $.removeCookie('permission', {path: '/'})
     },
     'getUserInfo': function (id) {
       var self = this
       ref.child('users').child(id).on('value', function (snapshot) {
         var val = snapshot.val()
-        var screenname = $.cookie('screenname')
         if (val) {
           if (val.info && val.info.username) {
-            if (!screenname) {
-              $.cookie('screenname', val.info.username, { expires: 7, path: '/' })
-            }
             self.user.screenname = val.info.username
           }
           if (val.admin) {
             self.user.admin = true
           }
           if (val.permission) {
+            var permissionCookie = $.cookie('permission')
+            if (!permissionCookie) {
+              $.cookie('permission', val.permission, { expires: 7, path: '/' })
+            }
             self.user.permission = val.permission
-            window.sessionStorage.setItem('permission', val.permission)
           }
         }
       })

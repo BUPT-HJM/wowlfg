@@ -76,7 +76,6 @@ export default {
           if (!err) {
             var username = self.info.username
             self.$root.screenname = username
-            $.cookie('screenname', username, { expires: 7, path: '/' })
           }
         })
       }

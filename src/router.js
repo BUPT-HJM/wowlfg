@@ -107,6 +107,11 @@ router.map({
       require(['./order-detail'], resolve)
     }
   },
+  'order/:id/modify': {
+    component: function (resolve) {
+      require(['./order-modify'], resolve)
+    }
+  },
   'order/manager': {
     component: function (resolve) {
       require(['./order-manager'], resolve)
@@ -155,7 +160,7 @@ router.beforeEach(function (transition) {
       transition.next()
     }
   } else if (transition.to.permission) {
-    var permission = window.sessionStorage.getItem('permission')
+    var permission = $.cookie('permission')
     if (permission && permission <= 3) {
       transition.next()
     } else {

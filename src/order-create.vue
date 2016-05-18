@@ -5,30 +5,23 @@
     <div class="field">
       <div class="two fields">
         <div class="field">
-          <label>角色名</label>
-          <input type="text" v-model="name">
+          <label>战网通行证 *</label>
+          <input type="text" v-model="battle">
         </div>
         <div class="field">
-          <label>订单编号</label>
-          <input type="text" v-model="number">
+          <label>角色名-服务器 *</label>
+          <input type="text" v-model="name">
         </div>
       </div>
     </div>
 
+    <h4 class="ui dividing header">订单完成</h4>
+
     <div class="field">
-      <label>服务器</label>
-      <div class="two fields">
-        <div class="field">
-          <select class="ui dropdown" v-model="region">
-            <option v-for="item in regionList" value="{{$index}}">{{item}}</option>
-          </select>
-        </div>
-        <div class="field">
-          <input type="text" v-model="server">
-        </div>
-      </div>
+      <label data-content="如是淘宝订单，请输入淘宝订单号" class="order-number-tip">订单编号 <i class="info circle icon"></i></label>
+      <input type="text" v-model="number">
     </div>
-    <h4 class="ui dividing header">预计完成</h4>
+
     <div class="field">
       <div class="two fields">
         <div class="field">
@@ -41,10 +34,12 @@
         </div>
       </div>
     </div>
+
     <div class="field">
-      <label>代练内容</label>
+      <label>代练内容 *</label>
       <input type="text" v-model="content"></textarea>
     </div>
+
     <div class="field">
       <label>备注</label>
       <textarea rows="2" v-model="msg"></textarea>
@@ -56,20 +51,16 @@
     </div>
   </div>
 </template>
-
 <script>
   var init = {
     name: '',
     number: '',
-    region: 0,
-    server: '',
     date: '',
     time: '',
     content: '',
     msg: '',
     status: 0
   }
-  import {region} from './data'
   import ref from './ref'
   export default {
     data: function () {
@@ -77,16 +68,15 @@
     },
     computed: {
       allow: function () {
-        return !!(this.name && this.number && this.server && this.content)
-      },
-      regionList: function () {
-        return region
+        return !!(this.battle && this.name && this.number && this.content)
       }
     },
     ready: function () {
       $('.message .close').on('click', function () {
         $(this).closest('.message').transition('fade')
       })
+
+      $('.order-number-tip').popup()
     },
     methods: {
       submit: function () {
