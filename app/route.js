@@ -6,7 +6,7 @@ var ref = new Wilddog('https://lfg.wilddogio.com/')
 
 router.get('/tips/:id', function(req, res) {
   var _id = req.params.id
-  ref.child('tips').child(_id).on('value', function (snapshot) {
+  ref.child('tips').child(_id).once('value', function (snapshot) {
     var val = snapshot.val()
     if (val) {
       res.send(val)
