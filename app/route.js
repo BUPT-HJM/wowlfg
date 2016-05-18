@@ -15,7 +15,6 @@ router.get('/tips/:id', function(req, res, next) {
         status: 'error'
       })
     }
-    req.socket.end()
   })
 })
 
