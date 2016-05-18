@@ -10,6 +10,6 @@ app.use(require('prerender-node').set('prerenderToken', 'f19Nv33JiyRHohMLi1uV'))
 
 app.use('/static', express.static(__dirname + '/dist/static'));
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+app.listen(3001, function () {
+  console.log('Example app listening on port 3001!');
 });
