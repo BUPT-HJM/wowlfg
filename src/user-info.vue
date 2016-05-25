@@ -23,14 +23,14 @@
   <h3 class="ui header">积分奖励</h3>
   <div class="ui statistic">
     <div class="value">
-      5
+      {{point}}
     </div>
     <div class="label">
       积分
     </div>
   </div>
   <div class="">
-    <button type="button" class="ui button basic" name="button"><i class="trophy icon"></i> 积分兑换</button>
+    <button type="button" class="ui button basic" name="button" v-link="{path: '/reward'}"><i class="trophy icon"></i> 积分兑换</button>
   </div>
 </template>
 <script>
@@ -45,7 +45,8 @@ export default {
       },
       edit: false,
       admin: false,
-      permission: 0
+      permission: 0,
+      point: 0
     }
   },
   asyncData: function (resolve, reject) {

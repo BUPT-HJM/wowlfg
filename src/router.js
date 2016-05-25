@@ -44,6 +44,12 @@ router.map({
       }
     }
   },
+  'reward': {
+    auth: true,
+    component: function (resolve) {
+      require(['./reward'], resolve)
+    }
+  },
   'tips': {
     component: function (resolve) {
       require(['./tips'], resolve)

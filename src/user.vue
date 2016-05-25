@@ -5,9 +5,6 @@
         <a class="item" v-link="{ name: 'userInfo', params: { uid: userId }}">
           用户中心
         </a>
-        <!-- <a class="item">
-          组队
-        </a> -->
         <a class="item" v-link="{ name: 'post', params: { uid: userId }}" v-if="master">
           文章
         </a>

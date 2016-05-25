@@ -33,8 +33,3 @@
   display: none;
 }
 </style>
-
-<script>
-require('./less/markdown.less')
-require('./less/main.less')
-</script>

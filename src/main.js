@@ -3,6 +3,9 @@ import header from './components/header'
 import ref from './ref'
 import './filter'
 
+require('./less/markdown.less')
+require('./less/main.less')
+
 var init = {
   islogin: false,
   user: {

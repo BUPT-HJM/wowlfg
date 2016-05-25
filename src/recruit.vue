@@ -1,6 +1,7 @@
 <template>
   <div class="ui container">
     <button class="ui green button" @click="modalCtrl('#recruit-modal')">发布招募信息</button>
+    <button class="ui basic button" v-link="{path: '/tips/-KIanU9eoSSWCJqSNZhY'}"> <i class="gift icon"></i>活动奖励</button>
     <h4 class="ui horizontal divider header"><i class="info icon"></i> 招募信息</h4>
     <div class="ui form">
       <div class="inline fields">
